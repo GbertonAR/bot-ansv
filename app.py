@@ -4,6 +4,7 @@ import os
 import asyncio
 import datetime
 import smtplib
+import requests
 from email.mime.text import MIMEText
 from aiohttp import web
 from typing import Callable, Awaitable
@@ -156,6 +157,14 @@ async def handle_messages(request: web.Request) -> web.Response:
     except Exception as e:
         logger.error(f"Error procesando mensaje: {e}", exc_info=True)
         return web.Response(status=500, text=f"Internal Server Error: {e}")
+    
+def generar_token_direct_line(secret: str) -> str:
+    response = requests.post(
+        "https://directline.botframework.com/v3/directline/tokens/generate",
+        headers={"Authorization": f"Bearer {secret}"}
+    )
+    return response.json()["token"]
+    
 
 async def chat_config_handler(request: web.Request) -> web.Response:
     """

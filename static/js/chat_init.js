@@ -74,10 +74,9 @@
 
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
-                token: token,
-                domain: 'http://127.0.0.1:8850/api/messages', // <--- NUEVA LÍNEA: Solo la URL base del bot
-                webSocket: false
+                 token,
             }),
+           
             userID: userID,
             username: 'Usuario Web',
             locale: 'es-ES',

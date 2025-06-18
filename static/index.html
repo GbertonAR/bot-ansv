@@ -165,14 +165,16 @@
   </div>
 
   <script>
-    (async function () {
-      const directLine = window.WebChat.createDirectLine({
-        <!-- domain: "http://localhost:8850/api/messages", -->
-        domain: "https://ai-ansv-new.openai.azure.com/api",
-        webSocket: false
-      });
+(async function () {
+  try {
+    const configResponse = await fetch('/chat-config');
+    const config = await configResponse.json();
 
-      const styleOptions = {
+    const directLine = window.WebChat.createDirectLine({
+      secret: config.directLineSecret
+    });
+
+    const styleOptions = {
         backgroundColor: '#f5f8ff',
         bubbleBackground: '#e0f7fa',
         bubbleFromUserBackground: '#e8f5e9',
@@ -203,10 +205,11 @@
       }, document.getElementById('webchat'));
 
       document.getElementById('webchat').classList.add('ready');
-    })().catch(err => {
+    } catch (err) {
       console.error('Error al cargar el Web Chat:', err);
       document.getElementById('loading-message').innerText = 'Error al conectar con el asistente.';
-    });
+    }
+    })();
   </script>
 </body>
 </html>
