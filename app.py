@@ -5,6 +5,7 @@ import asyncio
 import datetime
 import smtplib
 import requests
+import aiohttp
 from email.mime.text import MIMEText
 from aiohttp import web
 from typing import Callable, Awaitable
@@ -116,18 +117,26 @@ BOT = BotANSV(
 app = web.Application()
 
 # 💡 Configurar CORS justo después de crear la app:
+# cors = aiohttp_cors.setup(app, defaults={
+#     "http://localhost:8850": aiohttp_cors.ResourceOptions(
+#         allow_credentials=True,
+#         expose_headers="*",
+#         allow_headers="*"
+#     ),
+#     "http://127.0.0.1:8850": aiohttp_cors.ResourceOptions(
+#         allow_credentials=True,
+#         expose_headers="*",
+#         allow_headers="*"
+#     ),
+#     "ai-bot-ansv-web-huh3g8cqgcfjgjga.westus-01.azurewebsites.net": aiohttp_cors.ResourceOptions(
+#         allow_credentials=True,
+#         expose_headers="*",
+#         allow_headers="*"
+#     )
+# })
+
 cors = aiohttp_cors.setup(app, defaults={
-    "http://localhost:8850": aiohttp_cors.ResourceOptions(
-        allow_credentials=True,
-        expose_headers="*",
-        allow_headers="*"
-    ),
-    "http://127.0.0.1:8850": aiohttp_cors.ResourceOptions(
-        allow_credentials=True,
-        expose_headers="*",
-        allow_headers="*"
-    ),
-    "ai-bot-ansv-web-huh3g8cqgcfjgjga.westus-01.azurewebsites.net": aiohttp_cors.ResourceOptions(
+    "*": aiohttp_cors.ResourceOptions(
         allow_credentials=True,
         expose_headers="*",
         allow_headers="*"
@@ -139,6 +148,19 @@ cors = aiohttp_cors.setup(app, defaults={
 # 📌 Aplicar CORS a todas las rutas
 for route in list(app.router.routes()):
     cors.add(route)
+
+async def generate_directline_token(secret):
+    url = "https://directline.botframework.com/v3/directline/tokens/generate"
+    headers = {"Authorization": f"Bearer {secret}"}
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, headers=headers) as response:
+            if response.status == 200:
+                data = await response.json()
+                return data.get("token")
+            else:
+                logger.error(f"Error generando token Direct Line: {response.status}")
+                return None
+
 
 async def handle_messages(request: web.Request) -> web.Response:
     if "application/json" not in request.headers["Content-Type"]:
@@ -166,23 +188,41 @@ def generar_token_direct_line(secret: str) -> str:
     return response.json()["token"]
     
 
-async def chat_config_handler(request: web.Request) -> web.Response:
-    """
-    Handler para la ruta /chat-config que devuelve la configuración del Web Chat
-    desde los parámetros cargados de la base de datos (BOT_PARAMS).
-    """
-    direct_line_secret = BOT_PARAMS.get("DIRECT_LINE_SECRET")
-    microsoft_app_id = BOT_PARAMS.get("MicrosoftAppId", "")
+# async def chat_config_handler(request: web.Request) -> web.Response:
+#     """
+#     Handler para la ruta /chat-config que devuelve la configuración del Web Chat
+#     desde los parámetros cargados de la base de datos (BOT_PARAMS).
+#     """
+#     direct_line_secret = BOT_PARAMS.get("DIRECT_LINE_SECRET")
+#     microsoft_app_id = BOT_PARAMS.get("MicrosoftAppId", "")
 
+#     if not direct_line_secret:
+#         logger.error("DIRECT_LINE_SECRET no encontrado en BOT_PARAMS (DB).")
+#         return web.json_response({"error": "Direct Line Secret no configurado"}, status=500)
+
+#     config = {
+#         "directLineSecret": direct_line_secret,
+#         "botId": microsoft_app_id,
+#         "botName": BOT_PARAMS.get("BOT_NAME", "Soporte ANSV"), # Lee de DB o usa default
+#         "welcomeMessage": BOT_PARAMS.get("WELCOME_MESSAGE", "Hola, soy tu asistente de soporte de ANSV. ¿En qué puedo ayudarte hoy?") # Lee de DB o usa default
+#     }
+#     return web.json_response(config)
+
+async def chat_config_handler(request: web.Request) -> web.Response:
+    direct_line_secret = BOT_PARAMS.get("DIRECT_LINE_SECRET")
     if not direct_line_secret:
         logger.error("DIRECT_LINE_SECRET no encontrado en BOT_PARAMS (DB).")
         return web.json_response({"error": "Direct Line Secret no configurado"}, status=500)
 
+    token = await generate_directline_token(direct_line_secret)
+    if not token:
+        return web.json_response({"error": "No se pudo generar el token de Direct Line"}, status=500)
+
     config = {
-        "directLineSecret": direct_line_secret,
-        "botId": microsoft_app_id,
-        "botName": BOT_PARAMS.get("BOT_NAME", "Soporte ANSV"), # Lee de DB o usa default
-        "welcomeMessage": BOT_PARAMS.get("WELCOME_MESSAGE", "Hola, soy tu asistente de soporte de ANSV. ¿En qué puedo ayudarte hoy?") # Lee de DB o usa default
+        "token": token,
+        "botId": BOT_PARAMS.get("MicrosoftAppId", ""),
+        "botName": BOT_PARAMS.get("BOT_NAME", "Soporte ANSV"),
+        "welcomeMessage": BOT_PARAMS.get("WELCOME_MESSAGE", "Hola, soy tu asistente de soporte de ANSV.")
     }
     return web.json_response(config)
 
@@ -194,6 +234,8 @@ async def handle_root(request):
     if os.path.exists(index_path):
         return web.FileResponse(index_path)
     return web.Response(text="Archivo index.html no encontrado", status=404)
+
+
 
 # ------------------- Registro de rutas -------------------
 route1 = app.router.add_post("/api/messages", handle_messages)

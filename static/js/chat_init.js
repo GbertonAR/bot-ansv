@@ -37,6 +37,7 @@
         const res = await fetch('/chat-config'); // Ruta relativa a tu servidor
         const config = await res.json();
         const token = config.token;
+        const directLine = window.WebChat.createDirectLine({ token });
 
         if (!token) {
             console.error("Error: Token de Direct Line no obtenido. Verifica la configuración de tu bot.");
