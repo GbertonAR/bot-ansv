@@ -136,7 +136,7 @@ app = web.Application()
 # })
 
 cors = aiohttp_cors.setup(app, defaults={
-    "*": aiohttp_cors.ResourceOptions(
+    "https://ai-bot-ansv-web-huh3g8cqgcfjgjga.westus-01.azurewebsites.net": aiohttp_cors.ResourceOptions(
         allow_credentials=True,
         expose_headers="*",
         allow_headers="*"
