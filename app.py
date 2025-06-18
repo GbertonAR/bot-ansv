@@ -125,8 +125,19 @@ cors = aiohttp_cors.setup(app, defaults={
         allow_credentials=True,
         expose_headers="*",
         allow_headers="*"
+    ),
+    "ai-bot-ansv-web-huh3g8cqgcfjgjga.westus-01.azurewebsites.net": aiohttp_cors.ResourceOptions(
+        allow_credentials=True,
+        expose_headers="*",
+        allow_headers="*"
     )
 })
+
+# ⚙️ Leer origenes permitidos desde variable de entorno o usar valores por defecto
+
+# 📌 Aplicar CORS a todas las rutas
+for route in list(app.router.routes()):
+    cors.add(route)
 
 async def handle_messages(request: web.Request) -> web.Response:
     if "application/json" not in request.headers["Content-Type"]:
