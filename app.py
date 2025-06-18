@@ -188,14 +188,15 @@ for route in list(app.router.routes()):
     cors.add(route)
 # ========================== Punto de Entrada Principal ==========================
 def main():
-    port = BOT_PORT
+    port = int(os.environ.get("PORT", 3978))  # Puerto que asigna Azure, o 3978 por defecto para local
+    host = "0.0.0.0"  # Escucha en todas las interfaces para Azure
 
-    logger.info(f"🌐 Servidor del bot iniciado en http://127.0.0.1:{port}")
-    logger.info(f"🔗 Endpoint para el Bot Framework Service: http://127.0.0.1:{port}/api/messages")
-    logger.info(f"💬 Web Chat disponible en: http://127.0.0.1:{port}/\n")
+    logger.info(f"🌐 Servidor del bot iniciado en http://{host}:{port}")
+    logger.info(f"🔗 Endpoint para el Bot Framework Service: http://{host}:{port}/api/messages")
+    logger.info(f"💬 Web Chat disponible en: http://{host}:{port}/\n")
 
     try:
-        web.run_app(app, host="127.0.0.1", port=port)
+        web.run_app(app, host=host, port=port)
     except Exception as error:
         logger.critical(f"❌ Error fatal al iniciar la aplicación web: {error}")
         traceback.print_exc()
