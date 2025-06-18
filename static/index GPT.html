@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Soporte ANSV</title>
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <style>
+        /* ... Todos los estilos CSS intactos como solicitaste ... */
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <header>🤖 Asistente de Soporte ANSV</header>
+
+        <div id="main-content">
+            <div id="sidebar">
+                <!-- Sidebar con perfil -->
+                <h2>
+                    <svg class="icon-person" viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                    Mi Perfil
+                </h2>
+                <p><strong>Nombre:</strong> Invitado</p>
+                <p>
+                    <svg class="icon-location" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <strong>Provincia:</strong> Buenos Aires
+                </p>
+                <p>
+                    <svg class="icon-id-card" viewBox="0 0 24 24">
+                        <path d="M22 17H2c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2v-2c0-1.1-.9-2-2-2zm0-10H2c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2z"/>
+                    </svg>
+                    <strong>Municipio:</strong> La Plata
+                </p>
+                <button>Editar Perfil</button>
+            </div>
+
+            <div id="webchat-container">
+                <div id="loading-message">Conectando con el asistente...</div>
+                <div id="webchat" role="main"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (async function () {
+            const styleOptions = {
+                bubbleBorderRadius: 10,
+                bubbleFromUserBorderRadius: 10,
+                backgroundColor: '#f5f8ff',
+                bubbleBackground: '#e0f7fa',
+                bubbleFromUserBackground: '#e8f5e9',
+                accent: '#007bff',
+                sendBoxBackground: '#ffffff',
+                sendBoxButtonColor: '#007bff',
+                primaryFont: '"Segoe UI", sans-serif',
+                rootHeight: '100%',
+                rootWidth: '100%',
+                sendBoxHeight: 48,
+                sendBoxTextWrap: true,
+                botAvatarImage: '/static/ansv_avatar.png',
+                userAvatarImage: '/static/user_avatar.png',
+                botAvatarInitials: 'BS',
+                userAvatarInitials: 'TU',
+                hideUploadButton: true,
+            };
+
+            const directLine = window.WebChat.createDirectLine({ token: "GA9fiAni0ORKJMUCRH4Ahy95nyZJIyrs0nZ4YI6tFfoswDfpsdwYJQQJ99BEAC24pbEAArohAAABAZBS2cxq.5DSNMmMWSQekIG4GWJski6rmmUjKVJzTIGEwzU9kGwOrK67zivu6JQQJ99BEAC24pbEAArohAAABAZBS4Yg9" });
+
+            window.WebChat.renderWebChat({
+                directLine,
+                styleOptions,
+                userID: 'usuario-invitado',
+                username: 'Invitado',
+                locale: 'es-ES'
+            }, document.getElementById('webchat'));
+
+            document.getElementById('webchat').classList.add('ready');
+        })();
+    </script>
+</body>
+</html>

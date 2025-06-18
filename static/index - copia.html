@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bot de Asistencia ANSV</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Estilos generales para asegurar que la página ocupe toda la altura */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex; /* Usamos flexbox para el layout principal */
+            background-color: #f4f7f6; /* Fondo suave */
+            overflow: hidden; /* Evita scrolls no deseados si el contenido se desborda */
+        }
+
+        /* Contenedor del Sidebar */
+        #sidebar {
+            width: 280px;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            position: relative; /* Cambiado a relative para flexbox */
+            height: 100%;
+            transition: transform 0.3s ease-in-out; /* Usamos transform para animar */
+            transform: translateX(-280px); /* Oculto por defecto */
+            z-index: 1000;
+            flex-shrink: 0; /* No permite que el sidebar se encoja */
+            display: flex;
+            flex-direction: column;
+        }
+        #sidebar.active {
+            transform: translateX(0); /* Muestra el sidebar */
+        }
+        #sidebar h2 {
+            color: #0056b3;
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+            flex-grow: 1;
+        }
+        #sidebar li {
+            margin-bottom: 15px;
+        }
+        #sidebar a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1.1em;
+            display: block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        #sidebar a:hover {
+            background-color: #e9ecef;
+            color: #007bff;
+        }
+        
+        /* Estilos del Botón de Toggle del Sidebar */
+        #sidebar-toggle {
+            position: fixed; /* Mantenemos fijo para que siempre sea accesible */
+            top: 15px;
+            left: 15px;
+            z-index: 1001;
+            padding: 12px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        #sidebar-toggle:hover {
+            background-color: #0056b3;
+        }
+
+        /* Contenedor principal del Web Chat */
+        #main-container {
+            flex-grow: 1; /* Ocupa el espacio restante del body */
+            display: flex; /* Usa flexbox para alinear el webchat */
+            justify-content: center; /* Centra horizontalmente */
+            align-items: center; /* Centra verticalmente */
+            padding: 20px; /* Un poco de padding alrededor del chat */
+            transition: margin-left 0.3s ease-in-out; /* Para la animación cuando el sidebar se abre */
+            margin-left: 0; /* Sin margen por defecto */
+        }
+
+        /* Estilos del Web Chat */
+        #webchat {
+            width: 100%; /* El chat ocupa todo el ancho del contenedor */
+            max-width: 800px; /* Ancho máximo para que no se extienda demasiado en pantallas grandes */
+            height: 100%; /* El chat ocupa toda la altura del contenedor */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden; /* Muy importante para el Web Chat */
+            background-color: #ffffff; /* Fondo blanco para el área del chat */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Sombra suave para destacar el chat */
+        }
+
+        /* Media Queries para responsividad */
+        @media (min-width: 768px) {
+            #sidebar.active {
+                transform: translateX(0); /* En pantallas grandes, sidebar visible por defecto */
+            }
+            #main-container {
+                margin-left: 280px; /* Margen para dejar espacio al sidebar */
+            }
+        }
+        @media (max-width: 767px) {
+            #sidebar {
+                width: 100%;
+                left: 0; /* En móviles el sidebar se superpone */
+                transform: translateX(-100%); /* Oculto completamente en móviles */
+                box-shadow: none;
+            }
+            #sidebar.active {
+                transform: translateX(0);
+            }
+            #sidebar-toggle {
+                left: 10px; /* Ajuste para el botón en móvil */
+                top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button id="sidebar-toggle">☰</button>
+    <div id="sidebar">
+        <h2>Menú de Navegación</h2>
+        <ul>
+            <li><a href="https://www.ansv.gob.ar" target="_blank">Sitio Web ANSV</a></li>
+            <li><a href="https://www.argentina.gob.ar/transporte/licencia-nacional-conducir" target="_blank">Licencia Nacional de Conducir</a></li>
+            <li><a href="https://www.argentina.gob.ar/ansv/normativa" target="_blank">Normativa ANSV</a></li>
+            <li><a href="https://www.argentina.gob.ar/ansv/contacto" target="_blank">Contacto ANSV</a></li>
+        </ul>
+        <p style="text-align: center; font-size: 0.9em; color: #666; margin-top: auto;">Bot de Asistencia ANSV</p>
+    </div>
+
+    <div id="main-container">
+        <div id="webchat" role="main"></div>
+    </div>
+
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <script>
+        (async function () {
+            // Generar un ID de usuario único
+            const userID = 'user_' + Math.random().toString(36).substring(2, 9);
+            const directLine = window.WebChat.createDirectLine({
+                token: "GA9fiAni0ORKJMUCRH4Ahy95nyZJIyrs0nZ4YI6tFfoswDfpsdwYJQQJ99BEAC24pbEAArohAAABAZBS2cxq.5DSNMmMWSQekIG4GWJski6rmmUjKVJzTIGEwzU9kGwOrK67zivu6JQQJ99BEAC24pbEAArohAAABAZBS4Yg9" // Deja este placeholder por ahora.
+            });
+
+            // Configura opciones de estilo para el Web Chat
+            const styleOptions = {
+                bubbleBackground: '#e0f7fa', /* Azul claro */
+                bubbleFromUserBackground: '#e8f5e9', /* Verde claro */
+                botAvatarImage: '/static/ansv_avatar.png', // Asegúrate de tener estas imágenes
+                userAvatarImage: '/static/user_avatar.png', // en bot-ansv/static/
+                hideUploadButton: true,
+                sendBoxButtonColor: '#007bff',
+                sendBoxBackground: '#ffffff',
+                backgroundColor: '#f8f8f8',
+                accent: '#007bff',
+                cardEmphasisBackground: '#e0f7fa',
+                rootHeight: '100%', /* MUY IMPORTANTE para que el Web Chat se expanda en su contenedor */
+                rootWidth: '100%', /* MUY IMPORTANTE */
+                primaryFont: 'Segoe UI, Arial, sans-serif',
+                sendBoxHeight: 48,
+                sendBoxTextWrap: true
+            };
+
+            window.WebChat.renderWebChat({
+                directLine: directLine,
+                store: window.WebChat.createStore(),
+                styleOptions: styleOptions,
+                userID: userID,
+                username: 'Usuario ANSV',
+                locale: 'es-ES'
+            }, document.getElementById('webchat'));
+
+            directLine.postActivity({
+                from: { id: userID, name: 'Usuario ANSV' },
+                type: 'event',
+                name: 'webchat/join',
+                value: { language: window.navigator.language }
+            }).subscribe(
+                id => console.log(`Posted activity, assigned ID ${id}`),
+                error => console.log(`Error posting activity ${error}`)
+            );
+
+            // Lógica para el sidebar
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const mainContainer = document.getElementById('main-container'); // Cambiado a main-container
+
+            // Inicialización del sidebar: Si la pantalla es grande, lo abre por defecto
+            if (window.innerWidth >= 768) {
+                sidebar.classList.add('active');
+                mainContainer.style.marginLeft = '280px'; // Establece el margen inicial
+            }
+
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+                if (sidebar.classList.contains('active')) {
+                    if (window.innerWidth >= 768) {
+                        mainContainer.style.marginLeft = '280px';
+                    } else {
+                        mainContainer.style.marginLeft = '0'; // No hay margen en móviles
+                    }
+                } else {
+                    mainContainer.style.marginLeft = '0';
+                }
+            });
+
+            // Opcional: manejar el resize para el sidebar
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768) {
+                    sidebar.classList.add('active');
+                    mainContainer.style.marginLeft = '280px';
+                } else {
+                    sidebar.classList.remove('active');
+                    mainContainer.style.marginLeft = '0';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

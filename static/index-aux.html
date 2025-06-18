@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Soporte ANSV - Bot Básico</title>
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <style>
+        /* Estilos mínimos para que ocupe toda la pantalla */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        #webchat {
+            height: 100%;
+            width: 100%;
+        }
+        #loading-message {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div id="webchat">
+        <p id="loading-message">Intentando conectar con el asistente básico...</p>
+    </div>
+
+    <script>
+        (async function () {
+            try {
+                // Paso 1: Obtener la configuración del bot (incluida la clave de Direct Line) desde tu servidor Flask
+                const res = await fetch('/chat-config');
+                const config = await res.json();
+
+                if (config.error) {
+                    throw new Error(config.error);
+                }
+
+                // Paso 2: Crear una instancia de Direct Line con la clave obtenida
+                const directLine = window.WebChat.createDirectLine({
+                    secret: config.directLineSecret // Usamos el secreto obtenido de /chat-config
+                });
+
+                // Paso 3: Renderizar el Web Chat
+                window.WebChat.renderWebChat({
+                    directLine,
+                    locale: 'es-ES', // Idioma en español
+                    userID: 'usuario-basico-prueba', // Un ID de usuario simple
+                    username: 'Invitado Básico', // Nombre de usuario para mostrar
+                    // Sin opciones de estilo o avatares complicados para simplificar
+                }, document.getElementById('webchat'));
+
+                // Ocultar el mensaje de carga una vez que Web Chat intenta renderizar
+                document.getElementById('loading-message').style.display = 'none';
+
+            } catch (err) {
+                // Manejo de errores si la conexión o la carga inicial fallan
+                console.error('Error al cargar el Web Chat básico:', err);
+                document.getElementById('loading-message').innerText = 'Error al conectar con el asistente básico. Revisa la consola para más detalles.';
+            }
+        })();
+    </script>
+</body>
+</html>

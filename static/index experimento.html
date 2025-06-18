@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Soporte ANSV</title>
+  <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+  <style>
+    /* Aquí van los mismos estilos que me compartiste, sin cambios */
+  </style>
+</head>
+<body>
+  <div id="app-container">
+    <header>🤖 Asistente de Soporte ANSV</header>
+    <div id="main-content">
+      <div id="sidebar" class="active">
+        <!-- Contenido del perfil sin cambios -->
+      </div>
+      <div id="webchat-container">
+        <div id="loading-message">Conectando con el asistente...</div>
+        <div id="webchat" role="main"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (async function () {
+      const styleOptions = {
+        bubbleBorderRadius: 10,
+        bubbleFromUserBorderRadius: 10,
+        backgroundColor: '#f5f8ff',
+        bubbleBackground: '#e0f7fa',
+        bubbleFromUserBackground: '#e8f5e9',
+        accent: '#007bff',
+        sendBoxBackground: '#ffffff',
+        sendBoxButtonColor: '#007bff',
+        primaryFont: '"Segoe UI", sans-serif',
+        rootHeight: '100%',
+        rootWidth: '100%',
+        sendBoxHeight: 48,
+        sendBoxTextWrap: true,
+        botAvatarImage: '/static/ansv_avatar.png',
+        userAvatarImage: '/static/user_avatar.png',
+        botAvatarInitials: 'BS',
+        userAvatarInitials: 'TU',
+        hideUploadButton: true,
+      };
+
+      const directLine = window.WebChat.createDirectLine({
+        domain: 'http://127.0.0.1:8850/api/messages',
+        webSocket: false
+      });
+
+      const store = window.WebChat.createStore(
+        {},
+        ({ dispatch }) => next => action => {
+          if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
+            console.log('Web Chat conectado exitosamente a Direct Line.');
+            const loadingMessage = document.getElementById('loading-message');
+            if (loadingMessage) loadingMessage.style.display = 'none';
+            document.getElementById('webchat').classList.add('ready');
+          } else if (
+            action.type === 'DIRECT_LINE/CONNECT_REJECTED' ||
+            action.type === 'DIRECT_LINE/CONNECT_FAILED'
+          ) {
+            console.error('Fallo la conexión de Web Chat a Direct Line. Payload:', action.payload);
+            const errorMessageElement = document.getElementById('loading-message');
+            if (errorMessageElement) {
+              errorMessageElement.innerText = 'Error al conectar con el asistente. Revisa la consola.';
+            }
+          }
+          return next(action);
+        }
+      );
+
+      const webchatElement = document.getElementById('webchat');
+      if (webchatElement) {
+        window.WebChat.renderWebChat({
+          directLine: directLine,
+          userID: 'webchat-user-' + Date.now().toString() + Math.random().toString(36).substr(2, 9),
+          username: 'Usuario Web',
+          locale: 'es-ES',
+          store: store,
+          styleOptions: styleOptions
+        }, webchatElement);
+        console.log("Web Chat renderizado correctamente.");
+      } else {
+        console.error("Elemento con id 'webchat' no encontrado en el DOM.");
+      }
+
+      window.addEventListener('resize', () => {
+        const sidebar = document.getElementById('sidebar');
+        if (window.innerWidth >= 768) {
+          sidebar.classList.add('active');
+        } else {
+          sidebar.classList.remove('active');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

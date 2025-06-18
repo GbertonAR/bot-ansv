@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bot de Soporte ANSV</title>
+  <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background-color: #003366;
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #webchat {
+      height: 80vh;
+      width: 90%;
+      max-width: 800px;
+    }
+  </style>
+</head>
+<body>
+  <h1>💬 Bot de Soporte ANSV</h1>
+  <div id="webchat" role="main"></div>
+  <script>
+    (async function () {
+      const store = window.WebChat.createStore({}, ({ dispatch }) => next => action => {
+        return next(action);
+      });
+
+      window.WebChat.renderWebChat({
+        directLine: window.WebChat.createDirectLine({
+          domain: 'http://localhost:8850/api/messages',
+          webSocket: false
+        }),
+        userID: 'usuario-invitado-' + Date.now(),
+        username: 'Invitado',
+        locale: 'es-ES',
+        store,
+        styleOptions: {
+          backgroundColor: '#003366',
+          bubbleBackground: '#e0f7fa',
+          bubbleTextColor: '#000',
+          bubbleFromUserBackground: '#fffde7',
+          bubbleFromUserTextColor: '#000',
+          sendBoxBackground: '#ffffff',
+          sendBoxButtonColor: '#003366',
+          botAvatarInitials: 'ANSV',
+          userAvatarInitials: 'Yo'
+        }
+      }, document.getElementById('webchat'));
+    })().catch(err => {
+      console.error('Error al iniciar Web Chat:', err);
+    });
+  </script>
+</body>
+</html>

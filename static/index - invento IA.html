@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Soporte ANSV</title>
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <style>
+        /* Estilos Generales y Reseteo */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", sans-serif; /* Consistente con objetivo.png */
+            overflow: hidden; /* Evita barras de desplazamiento no deseadas */
+            background-color: #f5f8ff; /* Fondo general de la página */
+            color: #1a237e; /* Color de texto base */
+        }
+
+        /* Contenedor principal de la aplicación */
+        #app-container {
+            display: flex;
+            flex-direction: column; /* Siempre en columna: header arriba, main-content abajo */
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Header superior */
+        header {
+            background-color: #0d47a1; /* Azul oscuro */
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+            z-index: 10; /* Asegura que esté sobre otros elementos */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        header .logo {
+            height: 40px; /* Tamaño del logo */
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+
+        /* Contenido principal (sidebar + chat) */
+        main {
+            display: flex;
+            flex: 1; /* Ocupa el espacio restante */
+            overflow: hidden; /* Para manejar el scroll interno de sidebar y webchat */
+        }
+
+        /* Sidebar */
+        #sidebar {
+            width: 280px; /* Ancho predeterminado del sidebar */
+            background-color: #e3f2fd; /* Azul claro */
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto; /* Para desplazamiento si el contenido es largo */
+            transition: transform 0.3s ease-in-out; /* Animación para abrir/cerrar */
+            position: relative; /* Para el botón de toggle */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Empuja el footer hacia abajo */
+        }
+
+        #sidebar.active {
+            transform: translateX(0);
+        }
+
+        #sidebar.hidden {
+            transform: translateX(-100%);
+            position: absolute; /* Para que no ocupe espacio cuando está oculto */
+            left: 0;
+            top: 0;
+            height: 100%;
+        }
+
+        #sidebar h2 {
+            color: #1a237e;
+            margin-top: 0;
+            border-bottom: 1px solid #bbdefb;
+            padding-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        #sidebar p {
+            color: #424242;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        #sidebar-footer {
+            margin-top: auto; /* Empuja el footer al final del sidebar */
+            padding-top: 20px;
+            border-top: 1px solid #bbdefb;
+            font-size: 0.85rem;
+            color: #616161;
+        }
+
+        /* Toggle Button para Sidebar en móviles */
+        .sidebar-toggle-button {
+            display: none; /* Oculto por defecto en desktop */
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #0d47a1;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+            z-index: 20; /* Asegura que esté por encima del sidebar */
+        }
+
+        /* Contenedor del Web Chat */
+        #webchat {
+            flex: 1; /* Ocupa todo el espacio restante horizontalmente */
+            height: 100%;
+            width: 100%; /* Asegura que ocupe todo el ancho disponible */
+            min-width: 0; /* Permite que se encoja */
+        }
+
+        /* Mensaje de carga/error */
+        #loading-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #546e7a;
+            font-size: 1.2rem;
+            z-index: 100;
+        }
+
+        /* Media Queries para diseño responsivo */
+        @media (max-width: 767px) {
+            main {
+                flex-direction: column; /* Apila sidebar y chat en móviles */
+            }
+
+            #sidebar {
+                width: 100%;
+                height: auto; /* Altura automática en móviles */
+                max-height: 50%; /* Limita la altura en pantalla pequeña */
+                overflow-y: auto;
+                position: fixed; /* Fijo para deslizarse */
+                transform: translateX(-100%); /* Oculto por defecto */
+                z-index: 10; /* Sobre el chat */
+                top: 0;
+                left: 0;
+                bottom: 0;
+                padding-top: 60px; /* Espacio para el botón de toggle */
+            }
+
+            #sidebar.active {
+                transform: translateX(0); /* Visible */
+            }
+
+            .sidebar-toggle-button {
+                display: block; /* Muestra el botón en móviles */
+            }
+
+            #webchat {
+                flex: 1;
+                height: 100%; /* Ocupa el resto de la altura */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <header>
+            <img src="/static/logo_ansv.png" alt="Logo ANSV" class="logo">
+            <h1>Soporte ANSV</h1>
+        </header>
+        <main>
+            <button class="sidebar-toggle-button" onclick="toggleSidebar()">☰ Menú</button>
+            <aside id="sidebar" class="active">
+                <div>
+                    <h2>Información de Contacto</h2>
+                    <p>
+                        Agencia Nacional de Seguridad Vial (ANSV)<br>
+                        Av. Santa Fe 3968, C1425BHG CABA, Argentina<br>
+                        Email: info@ansv.gov.ar (este es un ejemplo, reemplázalo con el real)
+                    </p>
+                    <p>
+                        Aquí podrás encontrar información sobre trámites, consultas frecuentes, y soporte general sobre seguridad vial.
+                    </p>
+                    <p>
+                        Nuestro asistente virtual está diseñado para ayudarte a obtener respuestas rápidas. Si necesitas asistencia personalizada, por favor utiliza las opciones de contacto.
+                    </p>
+                </div>
+                <div id="sidebar-footer">
+                    <p>© 2025 Agencia Nacional de Seguridad Vial. Todos los derechos reservados.</p>
+                </div>
+            </aside>
+            <div id="webchat">
+                <div id="loading-message">Cargando Web Chat...</div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Función para el botón de toggle del sidebar en móviles
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Script para inicializar Web Chat
+        (async function () {
+            // No necesitamos obtener un token de /chat-config para la conexión LOCAL DIRECTA
+            // const configResponse = await fetch('/chat-config');
+            // const configData = await configResponse.json();
+            // const token = configData.token; 
+            // const userID = configData.userID;
+
+            const styleOptions = {
+                bubbleBackground: 'rgba(25, 118, 210, .1)', // Azul claro
+                bubbleFromUserBackground: 'rgba(0, 150, 136, .1)', // Verde agua
+                groupTimestamp: 1000,
+                hideUploadButton: true, // Ocultar el botón de adjuntar
+                sendBoxBackground: '#ffffff', // Fondo de la caja de texto
+                sendBoxBorderColor: '#e0e0e0', // Borde de la caja de texto
+                sendBoxHeight: 50, // Altura de la caja de texto
+                suggestedActionBackground: 'white',
+                suggestedActionBorderColor: '#1976d2',
+                suggestedActionBorderRadius: 5,
+                suggestedActionBorderStyle: 'solid',
+                suggestedActionBorderWidth: 1,
+                suggestedActionTextColor: '#1976d2',
+                suggestedActionTextColorOnHover: 'white',
+                suggestedActionBackgroundColorOnHover: '#1976d2',
+                userAvatarBackgroundColor: '#2196f3',
+                botAvatarBackgroundColor: '#ef6c00',
+                microphoneButtonColor: '#1976d2',
+                backgroundColor: 'white', // Fondo del área de chat
+                accent: '#1976d2', // Color de acento para la barra de escritura, etc.
+                cardEmphasisBackgroundColor: '#e3f2fd', // Color para resaltar tarjetas
+            };
+
+            const store = window.WebChat.createStore(
+                {},
+                ({ dispatch }) => next => action => {
+                    if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
+                        document.getElementById('loading-message').style.display = 'none'; // Oculta el mensaje de carga
+                    } else if (action.type === 'DIRECT_LINE/CONNECT_FAILED') {
+                        const errorMessage = 'Fallo al conectar con Direct Line.';
+                        if (action.payload && action.payload.error && action.payload.error.message) {
+                            errorMessage += ' Detalles: ' + action.payload.error.message;
+                        } else if (typeof action.payload === 'string') {
+                            errorMessage += ' Detalles: ' + action.payload;
+                        }
+                        document.getElementById('loading-message').innerText = errorMessage + ' (Revisa la consola del navegador para más info)';
+                    }
+                    return next(action);
+                }
+            );
+
+            // ¡CAMBIO CLAVE AQUÍ! No se pasa el token para la conexión local directa.
+            const directLine = window.WebChat.createDirectLine({
+                // token: token, // <-- LÍNEA COMENTADA: Ya no se pasa el token
+                endpoint: 'http://127.0.0.1:8850/api/messages'
+            });
+
+            window.WebChat.renderWebChat({
+                directLine: directLine, // Usa la instancia de directLine creada arriba
+                userID: 'webchat-user-' + Date.now().toString() + Math.random().toString(36).substr(2, 9), // Genera un ID de usuario único
+                username: 'Usuario Web',
+                locale: 'es-ES',
+                store: store,
+                styleOptions: styleOptions
+            }, document.getElementById('webchat'));
+
+            // Listener para manejar el cambio de tamaño de ventana y mostrar/ocultar sidebar
+            window.addEventListener('resize', () => {
+                const sidebar = document.getElementById('sidebar');
+                if (window.innerWidth >= 768) {
+                    sidebar.classList.add('active');
+                } else {
+                    sidebar.classList.remove('active');
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

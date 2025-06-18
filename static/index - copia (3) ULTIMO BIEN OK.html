@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Soporte ANSV</title>
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <style>
+        /* Estilos Generales y Reseteo */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", sans-serif; /* Consistente con objetivo.png */
+            overflow: hidden; /* Evita barras de desplazamiento no deseadas */
+            background-color: #f5f8ff; /* Fondo general de la página */
+            color: #1a237e; /* Color de texto base */
+        }
+
+        /* Contenedor principal de la aplicación */
+        #app-container {
+            display: flex;
+            flex-direction: column; /* Siempre en columna: header arriba, main-content abajo */
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Header superior */
+        header {
+            background-color: #0d47a1; /* Azul oscuro */
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            flex-shrink: 0; /* No se encoge */
+        }
+
+        /* Contenido principal (sidebar + chat) */
+        #main-content {
+            display: flex;
+            flex-grow: 1; /* Ocupa el espacio restante */
+            overflow: hidden; /* Evita desbordamiento si los elementos internos son grandes */
+            flex-direction: column; /* Por defecto: sidebar y chat apilados en móviles */
+        }
+
+        /* Sidebar (Mi Perfil) */
+        #sidebar {
+            display: none; /* Oculto por defecto en móviles */
+            flex-shrink: 0; /* No se encoge */
+            width: 100%; /* Ocupa todo el ancho en modo oculto, luego se ajusta */
+            max-height: 0; /* Altura 0 para ocultarlo verticalmente */
+            background-color: white;
+            padding: 0; /* Sin padding cuando está oculto */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra para cuando es horizontal */
+            transition: all 0.3s ease-in-out; /* Transición suave para mostrar/ocultar */
+            overflow: hidden; /* Oculta contenido al encoger */
+            border-bottom: 1px solid #e0e0e0; /* Borde para cuando es horizontal */
+        }
+        #sidebar.active {
+            display: flex;
+            flex-direction: column; /* Contenido del sidebar apilado verticalmente */
+            width: 280px; /* Ancho de la barra lateral en escritorio */
+            max-height: none; /* Eliminar altura máxima */
+            padding: 20px;
+            border-bottom: none; /* Eliminar borde inferior */
+            border-right: 1px solid #e0e0e0; /* Borde lateral en escritorio */
+        }
+        #sidebar h2 {
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+            color: #1a237e;
+            margin-bottom: 20px;
+        }
+        #sidebar h2 svg {
+            margin-right: 10px;
+            color: #2196f3; /* Color de icono de perfil */
+        }
+        #sidebar p {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: #4a148c; /* Color de texto para los detalles del perfil */
+        }
+        #sidebar p strong {
+            color: #1a237e;
+        }
+        #sidebar button {
+            background-color: #2196f3; /* Azul para el botón de editar */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.2s ease;
+        }
+        #sidebar button:hover {
+            background-color: #1976d2; /* Azul más oscuro al pasar el ratón */
+        }
+
+        /* Contenedor del Web Chat */
+        #webchat-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* Apilar elementos en webchat-container */
+            align-items: center; /* Centrar horizontalmente */
+            justify-content: center; /* Centrar verticalmente */
+            padding: 10px; /* Padding alrededor del chat */
+            background-color: #f5f8ff; /* Mismo color de fondo que el body */
+        }
+        #webchat {
+            width: 100%;
+            max-width: 700px; /* Ancho máximo para el chat */
+            height: 100%; /* Ocupa 100% del alto disponible en su contenedor */
+            min-height: 400px; /* Altura mínima para asegurar visibilidad */
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            background: white;
+            overflow: hidden;
+        }
+        #loading-message {
+            font-family: "Segoe UI", sans-serif;
+            color: #555;
+            margin-top: 20px; /* Ajuste para que no esté pegado al top si se muestra */
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        /* Ocultar el mensaje de carga una vez que el webchat esté listo */
+        #webchat.ready + #loading-message {
+            display: none;
+        }
+
+        /* Media Queries para Responsive Design */
+        @media (min-width: 768px) {
+            #main-content {
+                flex-direction: row; /* En fila: sidebar a la izquierda, chat a la derecha */
+            }
+            #sidebar {
+                display: flex; /* Mostrar en pantallas de tablet y escritorio */
+                width: 280px; /* Ancho de la barra lateral */
+                max-height: none; /* Asegurar que no esté restringido verticalmente */
+                padding: 20px;
+            }
+            #webchat-container {
+                padding: 20px; /* Más padding en escritorio */
+            }
+        }
+
+        /* Iconos SVG (simulados para el perfil) */
+        .icon-person {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+        .icon-location {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+        .icon-id-card {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <header>🤖 Asistente de Soporte ANSV</header>
+
+        <div id="main-content">
+            <div id="sidebar">
+                <h2>
+                    <svg class="icon-person" viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                    Mi Perfil
+                </h2>
+                <p><strong>Nombre:</strong> Invitado</p>
+                <p>
+                    <svg class="icon-location" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <strong>Provincia:</strong> Buenos Aires
+                </p>
+                <p>
+                    <svg class="icon-id-card" viewBox="0 0 24 24">
+                        <path d="M22 17H2c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2v-2c0-1.1-.9-2-2-2zm0-10H2c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2z"/>
+                    </svg>
+                    <strong>Municipio:</strong> La Plata
+                </p>
+                <button>Editar Perfil</button>
+            </div>
+
+            <div id="webchat-container">
+                <div id="loading-message">Conectando con el asistente...</div>
+                <div id="webchat" role="main"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (async function () {
+            const directLine = window.WebChat.createDirectLine({
+                endpoint: 'http://127.0.0.1:8850/api/messages' // <--- ¡CAMBIA ESTA LÍNEA DE NUEVO!
+            });
+
+            const styleOptions = {
+                // Colores y estilos que reflejan tu diseño original
+                backgroundColor: '#f5f8ff', /* Fondo general de la página */
+                bubbleBackground: '#e0f7fa', /* Azul claro para burbujas del bot */
+                bubbleFromUserBackground: '#e8f5e9', /* Verde claro para burbujas del usuario */
+                accent: '#007bff', /* Color principal para elementos interactivos */
+                sendBoxBackground: '#ffffff', /* Fondo de la caja de texto */
+                sendBoxButtonColor: '#007bff', /* Color del botón de enviar */
+                primaryFont: '"Segoe UI", sans-serif', /* Misma fuente que el cuerpo */
+                rootHeight: '100%', /* Importante para que el Web Chat se expanda en su contenedor */
+                rootWidth: '100%',
+                sendBoxHeight: 48,
+                sendBoxTextWrap: true,
+                // Avatares: Usaremos los archivos estáticos como sugerimos.
+                // Si quieres incrustarlos en Base64, aquí es donde irían esas cadenas largas.
+                botAvatarImage: '/static/ansv_avatar.png',   // <--- Asegúrate de esta línea
+                userAvatarImage: '/static/user_avatar.png',   // <--- y esta línea
+                botAvatarInitials: 'BS',
+                userAvatarInitials: 'TU',  // Iniciales del bot y del usuario                 
+                hideUploadButton: true, // Ocultar el botón de adjuntar archivos
+            };
+
+            const store = window.WebChat.createStore(
+                {},
+                ({ dispatch }) => next => action => {
+                    if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
+                        document.getElementById('loading-message').style.display = 'none';
+                        document.getElementById('webchat').classList.add('ready'); // Marca el chat como listo
+                        console.log("Web Chat conectado exitosamente.");
+                        // En pantallas grandes, activa la barra lateral
+                        if (window.innerWidth >= 768) {
+                            document.getElementById('sidebar').classList.add('active');
+                        }
+                    } else if (action.type === 'DIRECT_LINE/CONNECT_REJECTED' || action.type === 'DIRECT_LINE/CONNECT_FAILED') {
+                        console.error('Fallo al conectar con Direct Line. Payload:', action.payload);
+                        let errorMessage = 'Error de conexión con el asistente.';
+                        if (action.payload && action.payload.error && action.payload.error.message) {
+                            errorMessage += ' Detalles: ' + action.payload.error.message;
+                        } else if (typeof action.payload === 'string') {
+                            errorMessage += ' Detalles: ' + action.payload;
+                        }
+                        document.getElementById('loading-message').innerText = errorMessage + ' (Revisa la consola del navegador para más info)';
+                    }
+                    return next(action);
+                }
+            );
+
+            window.WebChat.renderWebChat({
+                directLine: directLine, // Usa la instancia de directLine creada arriba
+                userID: 'webchat-user-' + Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                username: 'Usuario Web',
+                locale: 'es-ES',
+                store: store,
+                styleOptions: styleOptions
+            }, document.getElementById('webchat'));
+
+            // Listener para manejar el cambio de tamaño de ventana y mostrar/ocultar sidebar
+            window.addEventListener('resize', () => {
+                const sidebar = document.getElementById('sidebar');
+                if (window.innerWidth >= 768) {
+                    sidebar.classList.add('active');
+                } else {
+                    sidebar.classList.remove('active');
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
