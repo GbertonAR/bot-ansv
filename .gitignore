@@ -20,7 +20,7 @@ test_openai.py
 test1.py
 test.py
 test5.py
-*.txt
+data.txt
 
 # Archivos de paquetes/construcción
 *.zip
