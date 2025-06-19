@@ -250,7 +250,8 @@ for route in list(app.router.routes()):
     cors.add(route)
 # ========================== Punto de Entrada Principal ==========================
 def main():
-    port = int(os.environ.get("PORT", 3978))  # Puerto que asigna Azure, o 3978 por defecto para local
+    #port = int(os.environ.get("PORT", 3978))  # Puerto que asigna Azure, o 3978 por defecto para local
+    port = int(os.environ.get("PORT", 8000))  # Puerto que asigna Azure, o 3978 por defecto para local
     host = "0.0.0.0"  # Escucha en todas las interfaces para Azure
 
     logger.info(f"🌐 Servidor del bot iniciado en http://{host}:{port}")
