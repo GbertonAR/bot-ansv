@@ -36,16 +36,39 @@
     try {
         const res = await fetch('/chat-config'); // Ruta relativa a tu servidor
         const config = await res.json();
-        const token = config.token;
-        const directLine = window.WebChat.createDirectLine({ token });
 
-        if (!token) {
-            console.error("Error: Token de Direct Line no obtenido. Verifica la configuración de tu bot.");
+        console.log("Configuración del chat obtenida:", config);
+        const token = config.token;
+
+        // const directLine = window.WebChat.createDirectLine({ token });
+
+        if (!token || typeof token !== 'string' || token.trim() === '') {
+            console.error("Error: Token de Direct Line no obtenido. Verifica la configuración de tu bot.", token);
             alert("Error al cargar el chat: Token de autenticación no disponible.");
             return; // Detiene la ejecución si no hay token
         }
 
-        const store = window.WebChat.createStore();
+        const directLine = window.WebChat.createDirectLine({
+            token: token,
+            domain: 'https://directline.botframework.com/v3/directline',
+            webSocket: true,
+        });
+        
+        window.WebChat.renderWebChat({
+            directLine: directLine,
+            userID: userID,
+            username: 'Usuario Web',
+            locale: 'es-ES',
+        }, document.getElementById('webchat'));
+
+        console.log("Direct Line y Web Chat inicializados con éxito.", token.substring(0, 10) + '...'
+        );
+
+        } catch (error) {
+            console.error("Error al obtener el token de Direct Line:", error);
+            alert("No se pudo obtener el token de Direct Line. Por favor, revisa la consola para más detalles.");
+        }
+        // const store = window.WebChat.createStore();
 
         // Opciones de estilo personalizadas, incluyendo los avatares
         const styleOptions = {
