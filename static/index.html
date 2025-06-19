@@ -164,52 +164,7 @@
     </div>
   </div>
 
-  <script>
-(async function () {
-  try {
-    const configResponse = await fetch('/chat-config');
-    const config = await configResponse.json();
-
-    const directLine = window.WebChat.createDirectLine({
-      secret: config.directLineSecret
-    });
-
-    const styleOptions = {
-        backgroundColor: '#f5f8ff',
-        bubbleBackground: '#e0f7fa',
-        bubbleFromUserBackground: '#e8f5e9',
-        accent: '#007bff',
-        sendBoxBackground: '#ffffff',
-        sendBoxButtonColor: '#007bff',
-        primaryFont: '"Segoe UI", sans-serif',
-        rootHeight: '100%',
-        rootWidth: '100%',
-        sendBoxHeight: 48,
-        sendBoxTextWrap: true,
-        botAvatarImage: '/static/ansv_avatar.png',
-        userAvatarImage: '/static/user_avatar.png',
-        botAvatarInitials: 'BS',
-        userAvatarInitials: 'TU',
-        hideUploadButton: true
-      };
-
-      const store = window.WebChat.createStore({}, ({ dispatch }) => next => action => next(action));
-
-      window.WebChat.renderWebChat({
-        directLine,
-        styleOptions,
-        store,
-        locale: 'es-ES',
-        userID: 'usuario-invitado',
-        username: 'Invitado',
-      }, document.getElementById('webchat'));
-
-      document.getElementById('webchat').classList.add('ready');
-    } catch (err) {
-      console.error('Error al cargar el Web Chat:', err);
-      document.getElementById('loading-message').innerText = 'Error al conectar con el asistente.';
-    }
-    })();
-  </script>
+  <script src="/static/js/chat_init.js"></script>
+  
 </body>
 </html>
