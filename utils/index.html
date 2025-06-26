@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Soporte ANSV</title>
+  <link rel="icon" type="image/x-icon" href="/static/favicon1.ico" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f5f8ff;
+      color: #1a237e;
+      overflow: hidden;
+    }
+
+    #app-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+    }
+
+    header {
+      background-color: #0d47a1;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      position: relative;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #main-content {
+      display: flex;
+      flex-grow: 1;
+      overflow: hidden;
+    }
+
+    aside#sidebar {
+      width: 280px;
+      background-color: white;
+      border-right: 1px solid #e0e0e0;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    #webchat-container {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f5f8ff;
+      padding: 10px;
+    }
+
+    #webchat {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 10px;
+      max-width: 700px;
+      width: 100%;
+      height: 90%;
+      min-height: 500px;
+    }
+
+    #chat-box {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #input-section {
+      display: flex;
+      padding-top: 10px;
+      border-top: 1px solid #ccc;
+      gap: 10px;
+    }
+
+    #mensaje-input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    #enviar-btn {
+      padding: 10px 20px;
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .icon-person, .icon-location, .icon-id-card {
+      fill: currentColor;
+    }
+
+    @media (max-width: 768px) {
+      #main-content {
+        flex-direction: column;
+      }
+      #sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app-container">
+    <header>
+      🤖 Asistente de Soporte ANSV
+    </header>
+    <div id="main-content">
+      <aside id="sidebar" aria-label="Perfil del usuario">
+        <h2>
+          <svg class="icon-person" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+          Mi Perfil
+        </h2>
+        <p><strong>Nombre:</strong> Invitado</p>
+        <p>
+          <svg class="icon-location" width="20" height="20" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <strong>Provincia:</strong> Buenos Aires
+        </p>
+        <p>
+          <svg class="icon-id-card" width="22" height="22" viewBox="0 0 24 24">
+            <path d="M22 17H2c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2v-2c0-1.1-.9-2-2-2zm0-10H2c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2z"/>
+          </svg>
+          <strong>Municipio:</strong> La Plata
+        </p>
+        <button class="edit-profile">Editar Perfil</button>
+      </aside>
+
+      <main id="webchat-container">
+        <div id="webchat">
+          <div id="chat-box"></div>
+          <div id="input-section">
+            <input id="mensaje-input" type="text" placeholder="Escribí tu mensaje..." />
+            <button id="enviar-btn">Enviar</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/chat_init.js" defer></script>
+</body>
+</html>

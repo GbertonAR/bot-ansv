@@ -1,0 +1,176 @@
+/* style.css actualizado */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f1f1f1;
+  overflow: hidden;
+}
+
+header {
+  background-color: #005baa;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#main-content {
+  display: flex;
+  height: calc(100vh - 50px);
+  overflow: hidden;
+}
+
+#sidebar {
+  width: 250px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+#webchat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fefefe;
+  position: relative;
+}
+
+#chat-box-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+#chat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+}
+
+.montserrat-bold-heading {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900; /* Peso negrita */
+  font-style: normal;
+}
+
+/* #watermark {
+  position: absolute;
+  
+  
+  top: 50%;
+  left: 50%;
+  font-size: 4rem;
+  color: rgba(0, 0, 0, 0.05);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+} */
+
+#watermark {
+  position: fixed; /* CAMBIO CLAVE: Fijo en la pantalla, no relativo al padre */
+  top: 50%;
+  left: 50%;
+  font-size: 8rem; /* AUMENTADO: Para que sea más grande. Ajusta según necesites */
+  color: rgba(0, 0, 0, 0.1); /* AJUSTADO: Más visible que 0.05, pero aún sutil */
+  transform: translate(-50%, -50%); /* Centra el elemento basándose en su propio tamaño */
+  pointer-events: none; /* Asegura que no interfiera con clics en otros elementos */
+  user-select: none; /* Opcional: Evita que el texto sea seleccionable */
+  text-align: center; /* Asegura que el texto dentro del div esté centrado */
+  width: 100%; /* Opcional: Si quieres que el div ocupe todo el ancho para un mejor centrado de texto */
+  white-space: nowrap; /* Opcional: Evita que el texto se rompa en varias líneas */
+}
+
+.input-section {
+  display: flex;
+  border-top: 1px solid #ccc;
+  padding: 10px;
+  background-color: white;
+}
+
+.input-section input {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.input-section button {
+  background-color: #005baa;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.edit-profile {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #005baa;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.mensaje {
+  display: flex;
+  align-items: flex-end;
+  max-width: 80%;
+}
+
+.mensaje.user {
+  flex-direction: row-reverse;
+  margin-left: auto;
+  justify-content: flex-end;
+}
+
+.mensaje .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.mensaje .texto {
+  background-color: #e1f0ff;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.mensaje.user .texto {
+  background-color: #d1ffd1;
+  text-align: right;
+}
+
+.timestamp {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 20px;
+}
+
+
+
+.montserrat-bb {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
