@@ -112,39 +112,40 @@ TEMAS_PERMITIDOS = [
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 ######## Nuevo testeo
-from azure.identity import DefaultAzureCredential
-from azure.mgmt.cognitiveservices import CognitiveServicesManagementClient
+# from azure.mgmt.cognitiveservices import CognitiveServicesManagementClient
+# from azure.identity import DefaultAzureCredential
 
-def verificar_deployment_azure(subscription_id, resource_group, account_name, deployment_name):
-    try:
-        logger.info(f"🔎 Verificando si el deployment '{deployment_name}' existe en Azure OpenAI...")
-        credential = DefaultAzureCredential()
-        client = CognitiveServicesManagementClient(credential, subscription_id)
-        deployments = client.deployments.list(resource_group, account_name)
-        deployment_names = [d.name for d in deployments]
-        logger.info(f"📋 Deployments disponibles en Azure: {deployment_names}")
-        if deployment_name in deployment_names:
-            logger.info(f"✅ Deployment '{deployment_name}' verificado correctamente.")
-            return True
-        else:
-            logger.critical(f"❌ Deployment '{deployment_name}' NO existe en Azure.")
-            return False
-    except Exception as e:
-        logger.critical(f"❌ Error al verificar deployment en Azure: {e}")
-        return False
 
-# Parámetros necesarios
+# def verificar_deployment_azure(subscription_id, resource_group, account_name, deployment_name):
+#     try:
+#         logger.info(f"🔎 Verificando si el deployment '{deployment_name}' existe en Azure OpenAI...")
+#         credential = DefaultAzureCredential()
+#         client = CognitiveServicesManagementClient(credential, subscription_id)
+#         deployments = client.deployments.list(resource_group, account_name)
+#         deployment_names = [d.name for d in deployments]
+#         logger.info(f"📋 Deployments disponibles en Azure: {deployment_names}")
+#         if deployment_name in deployment_names:
+#             logger.info(f"✅ Deployment '{deployment_name}' verificado correctamente.")
+#             return True
+#         else:
+#             logger.critical(f"❌ Deployment '{deployment_name}' NO existe en Azure.")
+#             return False
+#     except Exception as e:
+#         logger.critical(f"❌ Error al verificar deployment en Azure: {e}")
+#         return False
+
+# # Parámetros necesarios
 subscription_id = "2cc76474-0fad-45b2-8035-bb21fbe8aaeb"
 resource_group = "rg-bot-ansv-view"
 account_name = "ai-ansv-new"
 deployment_name = BOT_PARAMS["AZURE_OPENAI_DEPLOYMENT_NAME"]
 
-# Verificar existencia del deployment en Azure antes de inicializar cliente
-if not verificar_deployment_azure(subscription_id, resource_group, account_name, deployment_name):
-    raise RuntimeError(f"No se encontró el deployment '{deployment_name}' en Azure OpenAI.")
+# # Verificar existencia del deployment en Azure antes de inicializar cliente
+# if not verificar_deployment_azure(subscription_id, resource_group, account_name, deployment_name):
+#     raise RuntimeError(f"No se encontró el deployment '{deployment_name}' en Azure OpenAI.")
 
 
-###############################################
+# ###############################################
 
 
 
