@@ -16,7 +16,8 @@
 
     <div id="main-content">
       <aside id="sidebar">
-        <button id="closeSidebarBtn">✕</button>
+        <!-- <button id="closeSidebarBtn">✕</button> -->
+        <button onclick="document.querySelector('.sidebar').classList.remove('show')">✖</button>
         <h2>
           <svg class="icon-person" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s..." /></svg>
           Mi Perfil
@@ -47,5 +48,6 @@
   </div>
 
   <script src="/static/js/chat_init.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 </html>

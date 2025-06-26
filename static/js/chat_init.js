@@ -19,7 +19,7 @@ function crearMensaje(texto, esUsuario = false) {
 
   const textoDiv = document.createElement('div');
   textoDiv.className = 'texto';
-  textoDiv.innerHTML = texto; // permitir texto enriquecido (negrita, etc.)
+  textoDiv.innerHTML = marked.parse(texto); // permitir texto enriquecido (negrita, etc.)
 
   mensaje.appendChild(avatar);
   mensaje.appendChild(textoDiv);
@@ -60,12 +60,16 @@ document.getElementById('openSidebarBtn').addEventListener('click', () => {
   document.getElementById('sidebar').classList.add('active');
 });
 
-document.getElementById('closeSidebarBtn').addEventListener('click', () => {
-  document.getElementById('sidebar').classList.remove('active');
-});
+
+
 
 // ✅ Mostrar mensaje de bienvenida automáticamente al cargar
 window.addEventListener('DOMContentLoaded', () => {
   const bienvenida = "👋 ¡Hola! Soy el asistente virtual de la ANSV.<br>Estoy aquí para ayudarte con información sobre seguridad vial, normativas, trámites y más.<br>Por favor, escribí tu consulta y te responderé lo antes posible.<br><br>🚦 <i>Trabajamos juntos por una movilidad más segura.</i>";
   crearMensaje(bienvenida, false);
+});
+
+document.getElementById('openSidebarBtn').addEventListener('click', function () {
+  const sidebar = document.querySelector('.sidebar');
+  sidebar.classList.toggle('show');
 });
