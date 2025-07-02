@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Provincias</title>
+    <link rel="stylesheet" href="/static/css/parametros.css" /> 
+</head>
+<body>
+    <header class="header-admin">    
+        <h1> 🧭 Provincias</h1>
+    </header>
+    <p>  </p>
+    <a class="btn btn-nuevo" href="/provincias/nueva">➕ Nueva Provincia</a>
+
+    <main class="grid-lanzador">    
+        <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in provincias %}
+                    <tr>
+                        <td>{{ p[0] }}</td>
+                        <td>{{ p[1] }}</td>
+                        <td>
+                        <a href="/parametros/{{ p[0] }}/editar" class="btn btn-editar">✏️ Editar</a>
+                        <form method="post" action="/parametros/{{ p[0] }}/eliminar" style="display:inline;">
+                            <button type="submit" class="btn btn-eliminar" onclick="return confirm('¿Eliminar este parámetro?')">🗑️</button>
+                        </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

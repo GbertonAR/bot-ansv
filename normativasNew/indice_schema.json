@@ -1,0 +1,14 @@
+{
+  "name": "normativas-index",
+  "fields": [
+    { "name": "id", "type": "Edm.String", "key": true },
+    { "name": "titulo", "type": "Edm.String", "searchable": true },
+    { "name": "contenido", "type": "Edm.String", "searchable": true },
+    { "name": "tipo", "type": "Edm.String", "filterable": true, "facetable": true },
+    { "name": "categoria", "type": "Edm.String", "filterable": true, "facetable": true },
+    { "name": "fuente", "type": "Edm.String", "filterable": true, "facetable": true },
+    { "name": "fuente_url", "type": "Edm.String" },
+    { "name": "fecha", "type": "Edm.String", "filterable": true, "sortable": true },
+    { "name": "fecha_creacion", "type": "Edm.String", "filterable": true, "sortable": true }
+  ]
+}

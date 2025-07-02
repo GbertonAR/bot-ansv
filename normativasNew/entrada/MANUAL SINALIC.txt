@@ -1,0 +1,620 @@
+INTRODUCCIÓN 
+La Dirección del Sistema Nacional de Licencias de Conducir entrega el presente 
+instructivo como material de apoyo al usuario Sistema Nacional de Licencias de Conducir 
+(SINALIC), a fin de aportar una guía respecto de la gestión del Sistema.  
+ 1.- Destinatarios:  
+El sistema está destinado a los Centros Emisores de Licencias (CEL´s ) pertenecientes a 
+organismos Jurisdiccionales ( Provinciales o Municipales ), que  se encuentren certificados 
+y habilitados a emitir la Licencia Nacional de Conducir.  
+ 2.- Consideraciones Generales:  
+El SINALIC consiste en un Sistema que registra todas las Licencias de Conducir 
+otorgadas por los diferentes CEL´ s. Dentro del marco de las Leyes Nacionales 24.449 y 
+26.363 sus decretos reglamentarios y Disposición ANSV Nro. 207/09.  
+ 3.- Tipos de trámites:  
+• Licencia Original: L icencia  de Conducir expedida a un conductor por primera vez 
+(principiante) o a un conductor una vez caduca su licencia (vencido su plazo de 
+gracia) . Requisitos: En este caso se deberá rendir los exámenes previstos en los 
+incisos a.3 (Curso teórico- Práctico), a.4 (Examen psicofísico), a.5 (E xamen 
+teórico), a.6 ( Examen teórico práctico de detección de fallas) y a.7 ( Examen 
+práctico de idoneidad conductiva) del Artículo 14 de la Ley N° 24.449.  
+ 
+• Licencia Renovada: Licencia expedida en reemplazo de su licencia vigente, 
+(aquella que se encuentre dentro del período de gracia o ventana) . Requisitos: En 
+este caso se deberá rendir los exámenes previstos en el inciso a.4 ( Examen 
+psicofísico). Para las personas mayores de 65 años, se debe cumplimentar con 
+todos los exámenes requeridos en los incisos a.4 (Examen psicofísico) , a.5  
+(Examen teórico)  y a.6 (Examen teórico práctico de detección de fallas)  del artículo 
+14 de la ley 24.449.  
+• Licencia Duplicada por cambio de datos: Licencia  expedida por razones de todo 
+cambio de datos consignados en la licencia (art. 18 de la ley 24.449) Requisitos: En este caso se deberá rendir los exámenes previstos en el inciso a.4 ( Examen   
+psicofísico), del Artículo 14 de la Ley N° 24.449. Se mantendrá la fecha de 
+vencimiento  de la licencia vigente . 
+ 
+• Licencia Duplicada: Licencia expedida en razón de  haber existido un robo, hurto 
+y/o extrav ío de la licencia.  Requisitos: En este caso se deberá rendir los exámenes 
+previstos en el inciso a.4 ( Examen psicofísico),  del Artículo 14 de la Ley N° 24.449. 
+Se mantendrá la fecha de vencimiento de la licencia vigente . 
+ 
+• Licencia Ampliada con cambio de clase: Licencia expedida por haberse 
+solicitado la incorporación de una nueva clase a la licencia existente.  Requisitos: el 
+ciudadano deberá rendir un modulo correspondiente a la clase solicitada y los 
+exámenes  previstos en los incisos a.3 (Curso teórico- Práctico), a.4 (E xamen 
+psicofísico), a.5 ( Examen teórico, del módulo respectivo a la/s clase/s a ampliar), 
+a.6 ( Examen teórico práctico de detección de fallas) y a. 7 (Examen práctico de 
+idoneidad conductiva) del Artículo 14 de la Ley N° 24.449. Se mantendrá la fecha 
+de vencimiento.  Se mantendrá la fecha de vencimiento  de la licencia vigente . 
+ 
+• Licencia Ampliada: Licencia  expedida por haberse solicitado  la incorporación de 
+una nueva s ub clase a la licencia existente siempre dentro de la misma clase.  
+Requisitos: en este caso se deberá rendir los exámenes previstos en los incisos  a.3 
+(Curso teórico- Práctico), a.4 ( Examen psicofísico) y de acuerdo a la sub clase a 
+solicitar el a.5 ( Examen teórico, a la sub clase a ampliar), a.6 ( Examen teórico 
+práctico de detección de fallas) y a.7 ( Examen práctico de idoneidad conductiva) 
+del Ar tículo 14 de la Ley N° 24.449. Se mantendrá la fecha de vencimiento  de la 
+licencia vigente . 
+ 
+• Licencia Renovada y Ampliada: Licencia que en un mismo acto es expedida en 
+reemplazo de una licencia vigente e incorpora una nueva clase o sub clase.  
+Requisitos:  en este caso se deberá rendir los exámenes previstos en los incisos  a.3 
+(Curso teórico- Práctico), a.4 ( Examen psicofísico) y de acuerdo a la sub clase a 
+solicitar el a.5 ( Examen teórico, a la sub clase a ampliar), a.6 ( Examen teórico 
+práctico de detección de fallas) y a.7 ( Examen práctico de idoneidad conductiva) 
+del Ar tículo 14 de la Ley N° 24.449. -       
+   
+ 
+AUTENTICACIÓN  
+INGRESAR AL SISTEMA A TRAVES DEL SIGUIENTE LINK . 
+https://app1.seguridadvial.gob .ar/sinalic.( Jurisdicción al que corresponda ) 
+ 
+PANTALLA DE INICIO  
+ 
+Se debe ingresar al sistema nombre de usuario (DNI del operador) y la contraseña que se le 
+suministre  (que luego será modificada por el operador).  
+ 
+ 
+ 
+  
+ 
+  
+Pantalla Principal  
+ 
+ 
+ 
+  Sobre el margen izquierdo, el sistema muestra el menú de acceso principal 
+correspondiente a las actividades generales, tales como “Administración”; “Insumos”; 
+“CeNAT”, “Trámite de Licencia”; “Seguridad”; “Licencia anterior”; “Autenticación”.   Si 
+clickeamos  sobre uno de ellos, se despliega una serie de ítems que corresponde a las 
+actividades específicas que le permite realizar al usuario logueado.  
+IMPORTANTE: En cada ítem del proces o los datos que deben ser completados 
+obligatoriamente son aquellos que poseen la marca (*).  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+1. Emitir boleta de pago  
+Solapa: CeNAT  
+Ítem: Emitir  boleta de pago 
+ 
+Se coloca el tipo, Nº  de documento y sexo , luego se presiona la opción “consultar” 
+automáticamente el sistema sustrae de la base de datos del ReNaPer la información 
+restante del apellido, nombre  y fecha de nacimiento, y podremos visualizar que donde 
+teníamos la opción “consultar” ahora nos aparece la opción “emitir” al pulsarla nos generara en formato PDF la boleta para proceder a su impresión.  
+ 
+ 
+ 
+  
+ 
+  
+  
+2. Carga de la persona:  
+Solapa: Administración 
+Ítem: Persona  
+Se procede a realizar una consulta en la base de datos, coloca ndo el Nº de DNI y el sexo, 
+se consulta, en caso de no encontrar se la persona ingresada en la base de datos,  
+aparecerá la siguiente leyenda:  
+ 
+  
+Se debe proceder a AGREGAR, si se encontrase la persona cargada se visualizarán  los 
+datos pudiendo EDITAR /MODIFICAR la  información cargada (ej. La MODIFICACION DE 
+DOMICILIO para el caso de las personas que cambien el mismo y se presenten a realizar 
+el cambio en su licencia).  
+El menú  que se despliega indica los datos del solicitante que deben ser 
+completados; aquellos que poseen la marca ( *) deben  ser ingresados obligatoriamente 
+para completar correctamente el proceso. Antes de registrar la operación, (ES 
+OBLIGATORIO EL CUIL/CUIT Y LA PERSONA DEBE INFORMAR UN M AIL DE 
+CONTACTO)  el sistema evalúa si se han ingresado correctamente los datos, y en caso 
+contrario muestra un mensaje indicando el error encontrado. En este sentido, el sistema 
+no permite continuar con el proceso si no se ingresan los datos requeridos o si al ingresar 
+datos éstos son erróneos o no corresponden.  
+ 
+• Ítem especial dentro de la carga de PERSONA: Fecha de última modificación  
+ 
+  
+ 
+ 
+El mismo corresponde a la fecha de la última modificación del DOMICILIO en 
+cumplimiento con el artículo 18 de la ley 24.449, que establece un plazo de 90 días para denunciar cualquier cambio de datos, entre ellos el cambio de jurisdicción, y reemplazar 
+su licencia, bajo pena de caducidad de la misma; el campo debe completarse con la 
+FECHA DE CAMBIO DE DOMICILIO, en el caso de no haberse realizado ningún cambio 
+se deberá colocar nuevamente la FECHA DE NACIMIENTO para que el sistema no 
+realice la lógica del cambio de domicilio.  
+ Una vez ingresados los datos, se debe presionar la opción ACEPTAR, s i el sistema 
+lo registra correctamente aparecerá la siguiente pantalla:  
+ 
+   
+ 
+ 
+3. Carga de Licencia anterior:  
+Este ítem es aleatorio, depende el tramite que la persona se presenta a realiza r puede 
+o no requerirse que debamos registrar los datos de su licencia anterior,  Debemos 
+observar que tipo de trámite va a realizar la persona para saber cómo continuar. En el 
+caso de poseer una licencia previa o más de una, éstas se deben cargar en el sistema, 
+en su totalidad , las licencias anteriores deben cargarse en el sistema,  aunque las 
+mismas se encuentren excedidas en su fecha de vencimiento, ya que representan un antecedente de manejo para el contribuyente. LAS LICENCIAS NACIONALES NO 
+DEBEN SER CARGADAS 
+ Solapa: Licencia Anterior  
+Ítem: Licencia Anterior  
+ 
+En todos los ítems  siempre nos va a requerir la consulta previa, para corroborar si  existe 
+un antecedente cargado y para identificar el trámite que se encuentra en proceso.  
+Procedemos a Colocar el N° de DNI o Nº de Licencia  (opcional)  
+Para luego presionar C ONSULTAR  
+ 
+ 
+  
+ 
+Al igual que en la carga de las personas de no encontrarse un resultado procedemos a 
+AGREGAR.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Completar todos  los campos en este  caso en base a los datos de las licencia s que 
+presenta la persona.  
+ 
+ 
+ 
+ 
+  
+4. Inicio de T ramite Nuevo  
+Formulario único de trámite (FUT) 
+Solapa: Tramite de licencia  
+Ítem: Formulario único de trámite  
+ 
+Procedemos a realizar la consulta con los campos indicados . 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+Si procedimos correctamente l a persona nos debe aparecer cargada, dándonos la 
+posibilidad de seleccionarla para ingresar a realizar su formulario, caso contrario debemos realizar nuevamente el paso 2)  
+  
+ 
+ 
+   
+Al Seleccionar la persona ingresaremos al menú para completar los datos 
+pertinentes al nuevo trámite  que quedaran plasmados en el FUT.  
+ 
+ Cuando se abre la pantalla del FUT aparece una ventana que permite seleccionar 
+el tipo de trámite a iniciar:  
+ 
+  
+•  Original  
+• Renovación  
+• Renovación con ampliación   
+• Ampliación con cambio de clase   
+• Ampliación  
+• Duplicado  
+• Duplicado por cambio de datos  
+• IMPORTANTE: SI EL TIPO DE TRAMITE SELECCIONADO ES “ORIGINAL” 
+ENCONTRAREMOS UN ITEM CON POSIBILIDAD DE TILDE DENOMINADO 
+PRINCIPIANTE, DEBEMOS PROCEDER A TILDAR LA OPCION SIEMPRE QUE 
+LA PERSONA SE ENCUENTRE REALIZANDO SU LICENCIA NACIONAL DE 
+CONDUCIR POR PRIMERA VEZ  
+ 
+ Completar los datos del pago del CeNAT: código de barras de la boleta de pago 
+(leer con la lectora el código de barras que figura en la boleta de pago emitida al 
+inicio  del tramite);  colocar así mismo el  importe abonado y la fecha de pago.  
+ Procedemos a tildar la/s subclase/s  de licencia qu e solicita.   
+  
+ Tomar la foto con las cámaras web proporcionadas  e insertar la firma digital del 
+solicitante  con el pad de firmas. -    
+ Luego se Procede a aceptar el Tramite, es en este momento donde se realiza la 
+consulta de antecedentes de transito y se constata si la persona posee alguna 
+inhabilitación que podría tener como consecuencia el bloqueo del trámite y su 
+imposibilidad de continuar, de encontrarse todo en condiciones el tramite va a ser 
+aceptado y registrado exitosamente, sin otro obstáculo.  
+ 
+Una vez registrado exitosamente, en la misma pantalla donde nos encontramos, 
+podremos verificar que nos habilitaron las opciones de imprimir CENAT e imprimir 
+FUT (en la misma pantalla aparecen debajo los ítems correspondientes), al 
+seleccionarlos se generaran en formato PDF para poder realizar la impresión.  
+ 
+4.1 Reimpresión CENAT 
+El CENAT puede ser reimpreso  
+Solapa: CENAT  
+Ítem: Consultar CENAT  
+ 
+  
+Se coloca el N° de documento y sexo, se hace click en CONSULTAR. El sistema nos devuelve los 
+datos correspondientes, se hace click en SELECCIONAR  
+ Cuando el sistema arroja el resultado, se hace Click en VER y se abre el CeNAT  
+  
+ 
+• CONTENIDO DEL CENAT  
+ 
+ 
+   
+ 
+ 
+   
+ 
+ 
+ 
+  
+ 
+   
+  
+ 
+ 
+  
+ 
+ 
+ 
+      
+ 
+ 
+ 
+ 
+   
+ 
+ 
+ 
+ 
+ 
+ 
+   
+ 
+ 
+ 
+ 
+ 
+    
+ 
+ 
+  
+ 
+   
+ 
+  
+   
+ 
+     
+ 
+ 
+     
+ 
+     
+ 
+ 
+    
+  
+4.2 Reimpresión FUT 
+ 
+El FUT puede ser reimpreso  
+ 
+Solapa: Tramite licencia  
+Ítem: Consultar tramite  
+ 
+ 
+ 
+Se coloca el N° de documento y sexo, se hace  click en CONSULTAR y luego en VER , El sistema 
+nos devuelve el detalle del trámite, con la opción de IMPRIMIR FUT  habilitada, la misma al 
+seleccionarla abre el archivo PDF para su reimpresión.  
+ 
+ 
+  
+ 
+  
+ 
+  
+  
+5. Asistencia al Curso  
+ 
+Solapa: Tramite de licencia  
+Ítem: Asistencia al curso   
+Se debe  ubicar  el trámite  y seleccionar al solicitante mediante número de trámite o 
+número de documento y sexo.     
+ Seleccionamos la opción “consultar” y  luego en “seleccionar”.    
+Al registrar  la asistencia  debemos ingresar la fecha de asistencia, el resultado 
+(aprobado o desaprobado) y  el número de legajo del instructor matriculado que dicto el 
+curso, el mismo está compuesto por el DNI del instructor matriculado seguido de un – 
+(guion medio) y el numero 100 (cien), ej. 35784785- 100. 
+ 
+ 
+ 
+  
+6. Examen psicofísico  
+Solapa: Tramite de licencia  
+Ítem: Resultado  psicofísico  
+Se puede ubicar al solicitante mediante número de trámite o numero de documento 
+y sexo.  
+Presionamos la opción  “consultar” y luego en “seleccionar” , para proceder a 
+visualizar la siguiente pantalla:  
+  
+ 
+Debemos ingresar la fecha en que el s olicitante fue examinado físico, visual, 
+auditivo y psicológicamente, debiendo informarse el resultado de cada examen en 
+particular (apto o no apto) y el número de legajo del evaluador medico que realizo dicho 
+examen. Para el supuesto concreto que sea necesaria una junta médica, también ha de 
+cargarse la fecha en que se realizó la misma y su resultado. Cualquier observación que 
+deba figurar en la licencia, esta se debe colocar en el recuadro de observaciones que se 
+encuentra sobre el número de legajo.  En caso de que fuese una observación que no debe 
+figurar en la licencia, ésta se asentará en el campo derecho de cada examen (ej: menor 
+vigencia de la licencia).  
+Al registrarlo debemos ingresar el legajo del médico matriculado que realizo el 
+examen (ej. DNI -  400) para luego proceder a ACEPTAR . 
+ 
+ 
+ 
+  
+7. Examen teórico  
+ 
+Solapa: Tramite de licencia  
+Ítem: Resultado Teórico  
+Ubicamos el trámite de l solicitante mediante número de trámite o numero de 
+documento y sexo.  
+Presionamos la opción  “consultar” y luego en “seleccionar”  para visualizar la 
+siguiente pantalla:   
+  
+ 
+Cuando lo cargamos debemos ingresar la fecha de asistencia, el resultado 
+(aprobado o desaprobado) y  el número de legajo del examinador teórico que tomo el 
+examen.  (Ej. DNI –  300) para luego proceder a ACEPTAR.  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+8. Examen práctico  
+Solapa: Tramite de licencia  
+Ítem: Resultado  práctico  
+ 
+Ubicamos el trámite del solicitante mediante número de trámite o numero de 
+documento y sexo.  
+Presionamos la opción “consultar” y luego en “seleccionar” para visualizar la siguiente 
+pantalla:   
+ 
+Al momento de asentarlo debemos ingresar la fecha de asistencia, el resultado 
+(aprobado o desaprobado) y  el número  de legajo del examinador práctico que tomo el 
+examen.  (Ej. DNI –  200) para luego presionar ACEPTAR.  
+IMPORTANTE: LOS EXAMENES SIEMPRE SE REGISTRARAN DE FORMA 
+CORRELATIVA DENTRO DEL SISTEMA.  
+               
+ 
+ 
+  
+9. Aprobación de la licencia  
+Solapa: Tramite de licencia  
+Ítem: Aprobación emisión de licencia  
+Se debe  ubicar  el trámite  del solicitante mediante número de trámite o numero de 
+documento y sexo. Se clickea en “consultar” y luego en “seleccionar”  para visualizar la 
+siguiente pantalla:  
+  
+ En esta pantalla se completa el campo donde se especifica si el solicitante ha 
+cumplido con los requisitos previos requeridos.  
+  
+ La fecha de vencimiento de la licencia la ingresa automáticamente el sistema; sin 
+embargo,  puede ser modificada por un plazo menor, en el supuesto que así lo determine 
+el examinador PSICOFISICO. -   
+     Es importante este paso ya que de constatarse cualquier error en el tramite, puede 
+modificarse (si corresponde a un dato personal del contribuyente) o anularse el trámite  
+para volver a iniciarlo (si el error se encuentra en el mismo).  
+ 
+10. Emisión de la licencia  
+Solapa: Tramite de licencia  
+Ítem: Emitir licencia de conducir  
+Se debe ubicar el trámite del  solicitante mediante número de trámite o numero de 
+documento y sexo. Se clickea en “consultar” y luego en “seleccionar”.  Para visualizar la 
+siguiente pantalla:  
+ 
+ Presionamos la opción IMPRIMIR LICENCIA, Una vez impresa la licencia se debe 
+colocar el Nº de insumo que posee la licencia, utilizando el lector de código de barra, para 
+proceder a ASIGNAR INSUMO y que la licencia pase a estado VIGENTE, finalizando así  
+el trámite de la Licencia Nacional de Conducir.  
+ 
+ 
+ 
+ 
+  
+• Estados del tramite  
+El tramite nacional a partir de la creación del FUT recorre 3 estados, siendo el 
+primero el estado GENERADO, dentro de esta etapa se encuentra las 
+evaluaciones correspondientes al trámite, el siguiente estado es APROBADO, 
+momento en el cual se realiza una comprobación de los requisitos y se establece la 
+fecha de vigencia de la misma, para concluir con el estado EMITIDO, momento que 
+incluye la impresión. - 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+OTROS ITEMS 
+• Recepción de insumos  
+Solapa: Insumos  
+Ítem: Recepción  de insumos  
+ 
+Presionamos la opción CONSULTAR, para que el sistema nos arroje si existe algún kit en 
+condiciones de ser ACEPTADO por el centro.  
+ 
+• Anulación de insumos  
+ 
+Solapa: Insumos  
+Ítem: Baja de insumos 
+ 
+ 
+Tildar la opción “ individual”  colocar el número de insumo utilizando el lector de código de 
+barras sobre el plástico que se debe “anular” . 
+  
+ 
+Colocar el motivo de la baja  y “aceptar” . 
+ 
+• Anulación de Tramite  
+Solapa: Trámite de Licencia  
+Ítem: Anulación de trámite  
+Utilizando los filtros que propone el sistema en el ítem mencionado coloca 
+ubicaremos el tramite que vamos a proceder a anular . Cuando el sistema arroja el 
+resultado hacer click en SELECCIONAR.  
+Se coloca el motivo de la anulación y se hace Click en ACEPTAR.  
+ 
+ 
+ 
+   
+ 
+ 
+   
+  
+ 
+• CAMBIO DE CONTRASEÑA  
+ 
+Solapa: Seguridad  
+Ítem: Información de usuario  
+ 
+Se debe colocar la contraseña actual, luego la contraseña nueva y confirmarla en el ultimo campo.  
+Dicha contraseña debe contener: mayúsculas, minúsculas y números/signos . 
+   
+REIMPRESION LICENCIA DE OTRA JURISDICCION 
+ 
+La reimpresión de la licencia será de utilidad para los supuestos de robo, hurto o  extravío 
+de la Licencia Nacional de Conducir, ocurrido en una jurisdicción diferente a la del domicilio del 
+titular de la misma. Tendrá una validez temporal de 30 días, permitiendo que su titular pueda 
+conducir hasta su  domicilio real y tramitar el correspondiente duplicado.   
+Documentación a presentar:  
+• Denuncia o Declaración jurada de pérdida, robo, hurto o extravío . 
+• Documento con fotografía que acredite identidad.  
+  
+ 
+ 
+Se coloca el Nº de Documento, el sexo y se hace click en CONSULTAR , cuando el sistema 
+arroja el resultado se hace click en  VER. 
+ 
+ 
+Se completan los datos de la Denuncia Policial en caso de tenerlos . Para terminar con esta 
+etapa se debe tomar la foto y registrar la firma del solicitante. Una vez completados dichos 
+campos se hacen  click en ACEPTAR.  
+Si el sistema lo registra correctamente arrojara el siguiente mensaje.  
+  
+Se hace click en ACEPTAR . 
+ 
+Se coloca el Nº de Documento, el sexo y se hace click en CONSULTAR , cuando el  sistema 
+arroja el resultado se ha ce click en IMPRIMIR  
+ 
+  
+ 
+ 
+Se hace click en REIMPRIMIR LICENCIA , una vez impresa se debe colocar el Nº de 
+insumo, utilizando el lector de código de barra y se hace click en ASIGNAR INSUMO . 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+• TOMA DE LA FOTOGRAFÍ A 
+ 
+ 
+1. El fondo ideal para tomar la fotografía es el fondo liso, color BLANCO , el mismo 
+puede ser proporcionado por una pared, banner o similares.  
+2. Se requiere contar con la mayor iluminación natural  posible, de ser necesario 
+puede complementarse la toma con iluminación artificial tal como reflectores de 
+luz blanca o flashes manuales.  
+3. Un factor a tener en cuenta es  la proximidad entre el retratado y el fondo, para 
+evitar originar sombras que desvirtúen la imagen. En este sentido, busca que haya 
+suficiente distancia entre el sujeto y el fondo y procura que la dirección de la 
+iluminación haga que las sombras se generen fuera del encuadre.  
+4. La fotografía debe encuadrar el rostro de la persona  para la fácil detección de 
+rasgos físicos al momento de un control, por lo tanto,  la misma debe ser tomada a 
+la altura de los hombros y sin obstrucciones en el rostro.  
+5. La toma debe ser frontal y mirando directamente a la cámara.  
+6. Rostro completo con cierto margen en la parte superior y en ambos laterales.  
+7. En caso de deber usar apósitos por lastimaduras u otras condiciones físicas que lo 
+ameriten tendrán que ser de color natural.  
+8. La persona debe tomarse la fotografía sin elementos tales como gorras, bufandas, 
+lentes, entre otros, sin importar que se trate de un elemento necesario para la 
+conducción tal como los lentes con aumento.  
+9. Las vestimentas o accesorios propios de costumbres religiosas serán 
+permitidas en tanto no generen como resultado la imposibilidad de reconocimiento 
+de los rasgos del rostro.  
+10. No se solicitará  ningún tipo de cambio a quienes utilicen vestimentas o 
+maquillajes no atribuibles por usos y costumbres al sexo manifestado en el 
+documento de identidad.  
+ 
+ 
+ 
+   
+ 
+ 
+   
+   
+CONFIDENCIALIDAD:  
+ 
+1.- La identificación (usuario y contraseña) es personal e intransferible, la misma no debe 
+ser compartida, cedida o transferida a ningún otro usuario o tercero.  
+2.- El titular de la identificación es el responsable por las acciones que bajo dicho usuario 
+se realicen en el sistema.  
+3.- Ninguna persona puede autorizar u obligar a revelar la contraseña o ceder o transferir 
+su identificación personal a un usuario, ya sea en forma temporaria o permanente.    
+4.- No divulgar información sobre los sistemas informáticos de la ANSV a terceros, como 
+ser características de hardware/software, información sobre programas u operatorias, 
+características o topologías de red y/o protocolos de red usados, direcciones, IP , 
+direcciones de servidores, o servicios que los mismos proveen, características de las 
+autorizaciones de su identificación personal o de cualquier otro usuario.  
+5.- No se debe hacer copias del software y/o datos y/o configuraciones de los sistemas 
+para uso propio, uso personal no autorizado para ser provisto a terceros no 
+autorizados.  
+6.- Está expresamente prohibido descargar y/o almacenar y/o instalar software y/o 
+hardware que no esté debidamente autorizado por la ANSV.  
+7.- Los recursos informáticos de la ANSV son provistos solo para que el usuario pueda 
+cumplir con las tareas que le son asignadas según convenio.  No se deben usar los 
+recursos informáticos para beneficio propio o de terceros.  
+8.- Se debe informar en forma fehaciente cualquier vulnerabilidad, violación o posible mal 
+uso de los sistemas informáticos de la ANSV, a la Dirección del Sistema Nacional de Licencias de Conducir de la Agencia Nacional de Seguridad Vial.

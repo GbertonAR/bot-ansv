@@ -18,19 +18,30 @@
       <aside id="sidebar">
         <!-- <button id="closeSidebarBtn">✕</button> -->
         <button onclick="document.querySelector('.sidebar').classList.remove('show')">✖</button>
+
+        <p id="conexion-status" style="color: green; font-weight: bold; display: none;">
+            ✅ Conectado a Soporte
+        </p>
         <h2>
           <svg class="icon-person" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s..." /></svg>
           Mi Perfil
         </h2>
-        <p><strong>Nombre:</strong> Invitado</p>
-        <p><strong>Provincia:</strong> Buenos Aires</p>
-        <p><strong>Municipio:</strong> La Plata</p>
-        <button class="edit-profile">Editar Perfil</button>
+
+        <p><strong>Nombre:</strong> <span id="perfil-nombre">Invitado</span></p>
+        <p><strong>Provincia:</strong> <span id="perfil-provincia">-</span></p>
+        <p><strong>Municipio:</strong> <span id="perfil-municipio">-</span></p>
+
+        
+        
+        <button id="editProfileBtn" class="edit-profile">Editar perfil</button>
         <div class="chat-history">
           <h3>Historial de Chats</h3>
           <p class="timestamp">26/06/2025 - 21:03</p>
         </div>
       </aside>
+
+
+
 
       <div id="webchat-container">
         <div id="chat-box-container">
@@ -46,6 +57,65 @@
       </div>
     </div>
   </div>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const res = await fetch("/api/mi-perfil");
+        if (!res.ok) return;
+
+        const data = await res.json();
+        document.getElementById("perfil-nombre").textContent = data.nombre;
+        document.getElementById("perfil-provincia").textContent = data.provincia;
+        document.getElementById("perfil-municipio").textContent = data.municipio;
+
+        document.getElementById("conexion-status").style.display = "block";
+      } catch (err) {
+        console.warn("No autenticado o error al cargar perfil:", err);
+      }
+    });
+  </script>
+
+  <script>
+    let tiempoInactividad = 10 * 60 * 1000; // 10 minutos
+    let timer;
+
+    const resetTimer = () => {
+      clearTimeout(timer);
+      timer = setTimeout(logoutPorInactividad, tiempoInactividad);
+    };
+
+    const logoutPorInactividad = async () => {
+      try {
+        const res = await fetch("/logout", { method: "POST" });
+        if (res.ok) location.reload();
+      } catch (e) {
+        console.warn("Error al cerrar sesión automáticamente:", e);
+      }
+    };
+
+    // Solo iniciar timer si está autenticado
+    window.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const res = await fetch("/api/mi-perfil");
+        if (!res.ok) return;
+
+        const data = await res.json();
+        document.getElementById("perfil-nombre").textContent = data.nombre;
+        document.getElementById("perfil-provincia").textContent = data.provincia;
+        document.getElementById("perfil-municipio").textContent = data.municipio;
+        document.getElementById("conexion-status").style.display = "block";
+
+        // Solo si autenticado, activar eventos de actividad
+        ["click", "mousemove", "keypress", "scroll", "touchstart"].forEach(evt =>
+          document.addEventListener(evt, resetTimer)
+        );
+        resetTimer(); // iniciar timer
+      } catch (err) {
+        console.warn("No autenticado o error al cargar perfil:", err);
+      }
+    });
+  </script>  
 
   <script src="/static/js/chat_init.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

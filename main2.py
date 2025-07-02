@@ -1,15 +1,34 @@
 import os
 import logging
 import traceback
+import requests
+import re
+import time
+
 
 from fastapi import FastAPI, Request, Response, HTTPException, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, HTMLResponse
 from pydantic import BaseModel
+from azure.core.credentials import AzureKeyCredential
+from azure.search.documents import SearchClient
 #from openai import AzureOpenAI
+from data import auth, admin
+from data.crud_parametros import router as router_parametros
+from data.crud_provincias import router as router_provincias
+from data.crud_municipios import router as router_municipios
+#from data.crud_municipios import router as router_municipios
+from data.crud_roles import router as router_roles
+from data.crud_usuarios import router as router_usuarios
+from fastapi.templating import Jinja2Templates
 
 
+from data.auth_routes import router as auth_router_login
+
+import sqlite3
+import uuid
+from datetime import datetime
 
 
 from dotenv import load_dotenv
@@ -59,6 +78,8 @@ except Exception as e:
 app = FastAPI()
 router = APIRouter()
 
+templates = Jinja2Templates(directory="data/templates")
+
 # Modelo de entrada
 class MessageRequest(BaseModel):
     message: str
@@ -103,13 +124,26 @@ app.add_middleware(
 )
 
 TEMAS_PERMITIDOS = [
-    "ansv", "agencia nacional de seguridad vial", "ley", "decreto", "resolución",
-    "seguridad vial", "normativa", "provincias", "municipios", "autoridades",
-    "sitio web", "contacto", "ministerio", "tránsito", "licencia", "vialidad",
-    "reglamento", "cnrt", "licencias", "educación vial"
+    "ansv", "agencia nacional de seguridad vial", "ley", "decreto", "resolución", "linti", "procedimientos", "normativa nacional",
+    "seguridad vial", "normativa", "provincias", "provincia", "municipios", "municipio","autoridades", "categorias", "categoría", "licencia de conducir",
+    "sitio web", "contacto", "ministerio", "tránsito", "licencia", "vialidad", "procedimientos", "regulaciones"
+    "reglamento", "cnrt", "licencias", "educación vial", "registro", "transporte", "accidentes", "controles", "sanciones", "infraestructura",
+    "seguridad", "prevención", "conducción", "vehículos", "peatones", "ciclistas", "motociclistas", "transporte público", "controles de tránsito",
+    "ley de tránsito", "reglamento de tránsito", "seguridad en rutas", "seguridad en caminos", "seguridad en autopistas", "seguridad en calles", "seguridad en avenidas", "seguridad en carreteras"
 ]
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.include_router(auth.router)
+app.include_router(admin.router)
+app.include_router(auth_router_login) 
+app.include_router(router_parametros)
+app.include_router(router_provincias)
+app.include_router(router_municipios)
+app.include_router(router_roles)
+app.include_router(router_usuarios)
+
+
+
 
 ######## Nuevo testeo
 # from azure.mgmt.cognitiveservices import CognitiveServicesManagementClient
@@ -161,6 +195,116 @@ def es_consulta_valida(mensaje: str) -> bool:
     mensaje_limpio = mensaje.lower()
     print(f"🔍 Verificando consulta: {mensaje_limpio}")
     return any(palabra in mensaje_limpio for palabra in TEMAS_PERMITIDOS)
+
+def validar_urls(texto: str) -> str:
+    urls = re.findall(r'https?://\S+', texto)
+    for url in urls:
+        try:
+            r = requests.head(url, timeout=5)
+            if r.status_code >= 400:
+                texto = texto.replace(url, "(enlace no disponible)")
+        except:
+            texto = texto.replace(url, "(enlace no disponible)")
+    return texto
+
+######### Grabar consulta
+# Agregar al comienzo del archivo
+# import sqlite3
+# import uuid
+# from datetime import datetime
+
+# Función para insertar el log de interacción en la base de datos
+def registrar_interaccion(
+    id_usuario: str,
+    texto_consulta: str,
+    texto_respuesta: str,
+    tiempo_respuesta_ms: int,
+    modelo_ia_usado: str,
+    relevancia_ia: int = 0,
+    uuid_sesion: str = None,
+    ip_usuario: str = None,
+    es_desde_search: bool = False,
+    url_valida: bool = True,
+    feedback_usuario: int = 0
+):
+    try:
+        conn = sqlite3.connect("data/soporte_db.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            INSERT INTO interacciones_log (
+                id_usuario,
+                timestamp_consulta,
+                tipo_consulta,
+                texto_consulta,
+                timestamp_respuesta,
+                texto_respuesta,
+                tiempo_respuesta_ms,
+                modelo_ia_usado,
+                relevancia_ia,
+                uuid_sesion,
+                ip_usuario,
+                es_desde_search,
+                url_valida,
+                feedback_usuario
+            ) VALUES (?, CURRENT_TIMESTAMP, ?, ?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+            id_usuario or "anonimo",
+            "mensaje",
+            texto_consulta,
+            texto_respuesta,
+            tiempo_respuesta_ms,
+            modelo_ia_usado,
+            relevancia_ia,
+            uuid_sesion or str(uuid.uuid4()),
+            ip_usuario or "desconocida",
+            int(es_desde_search),
+            int(url_valida),
+            feedback_usuario
+        ))
+
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"⚠️ Error al registrar interacción: {e}")
+
+
+
+###############
+
+# Cliente Azure Search
+search_client = SearchClient(
+    # endpoint=BOT_PARAMS["AZURE_SEARCH_ENDPOINT"],
+    # index_name=BOT_PARAMS["AZURE_SEARCH_INDEX_NAME"],
+    # credential=AzureKeyCredential(BOT_PARAMS["AZURE_SEARCH_API_KEY"])
+    endpoint="https://ansv-search.search.windows.net",
+    index_name="normativas-index",
+    credential=AzureKeyCredential("j4aDzLBGWBo4VplEQMudE7HhhHbg7cRMmTRifk3ENpAzSeCrg5ph")    
+)
+
+def buscar_en_azure_search(pregunta: str) -> str:
+    """
+    Realiza una búsqueda en Azure Cognitive Search y devuelve los fragmentos relevantes como contexto.
+    """
+    try:
+        resultados = search_client.search(
+            search_text=pregunta,
+            top=3,
+            query_type="simple"
+        )
+
+        fragmentos = []
+        for doc in resultados:
+            contenido = doc.get("contenido", "")  # asegurate que el campo "contenido" exista en el índice
+            titulo = doc.get("titulo", "")
+            if contenido:
+                fragmentos.append(f"Título: {titulo}\n{contenido}")
+
+        return "\n---\n".join(fragmentos)
+
+    except Exception as e:
+        logger.warning(f"⚠️ Error al consultar Azure Search: {e}")
+        return ""
 
 print(f"🔑 Usando API Key: {BOT_PARAMS['AZURE_OPENAI_API_KEY']}")
 print(f" endpoint: {BOT_PARAMS['AZURE_OPENAI_ENDPOINT']}")
@@ -215,7 +359,8 @@ async def recibir_mensaje(request: MessageRequest):
             return JSONResponse(content={
                 "reply": "⚠️ Lo siento, mi función es ayudarte con temas relacionados con la seguridad vial en Argentina y la normativa aplicable. Si tenés otra consulta sobre la ANSV, estaré encantado de ayudarte."
             }, status_code=400)
-
+            
+        inicio = time.time()
         # response = client.chat.completions.create(
         #     model=BOT_PARAMS["AZURE_OPENAI_DEPLOYMENT_NAME"],
         #     messages=[
@@ -229,6 +374,26 @@ async def recibir_mensaje(request: MessageRequest):
                 {"role": "system", "content": contexto_ansv},
                 {"role": "user", "content": mensaje}
         ]
+        
+        ###################### RAG Ver que onda        
+        # 🔍 RAG: Buscar contexto adicional en Azure Search
+        contexto_extraido = buscar_en_azure_search(mensaje)
+        if not contexto_extraido:
+            contexto_extraido = "No se encontró información adicional relevante en los documentos disponibles."
+
+        prompt_usuario = (
+            f"Teniendo en cuenta la siguiente información institucional:\n"
+            f"{contexto_extraido}\n\n"
+            f"Respondé la siguiente pregunta:\n{mensaje}"
+        )
+
+        messages = [
+            {"role": "system", "content": contexto_ansv},
+            {"role": "user", "content": prompt_usuario}
+        ]
+
+
+        #################################        
         completion = client.chat.completions.create(
                     model=deployment_name,
                     messages=messages,
@@ -241,9 +406,32 @@ async def recibir_mensaje(request: MessageRequest):
                     stream=False
         )
         print(completion.to_json())
-        respuesta = completion.choices[0].message.content.strip()
-        print(f"📨 Respuesta del bot: {respuesta}")
-        return JSONResponse(content={"reply": respuesta})
+        respuesta_generada = completion.choices[0].message.content.strip()
+        respuesta_filtrada = validar_urls(respuesta_generada)
+        # respuesta = completion.choices[0].message.content.strip()
+        # print(f"📨 Respuesta del bot: {respuesta}")
+        # return JSONResponse(content={"reply": respuesta})
+        
+        # respuesta = completion.choices[0].message.content.strip()
+        print(f"📨 Respuesta del bot: {respuesta_filtrada}")
+        ############## zona de grabacion         
+        fin = time.time()
+        duracion_ms = int((fin - inicio) * 1000)
+
+        # Registrar la interacción
+        registrar_interaccion(
+            #id_usuario=request.state.usuario["id"] if request.state.usuario else "anonimo",
+            id_usuario="anonimo",
+            texto_consulta=mensaje,
+            texto_respuesta=respuesta_filtrada,
+            tiempo_respuesta_ms=duracion_ms,
+            modelo_ia_usado=deployment_name,
+            relevancia_ia=1,
+            es_desde_search=bool(contexto_extraido),
+            url_valida="(enlace no disponible)" not in respuesta_filtrada
+        )
+        ####################################################        
+        return JSONResponse(content={"reply": respuesta_filtrada})        
     
     except Exception as e:
         logger.error(f"❌ Error en /api/messages: {e}", exc_info=True)
@@ -341,3 +529,31 @@ async def chat_config():
         "botName": BOT_PARAMS.get("BOT_NAME", "Soporte ANSV"),
         "welcomeMessage": BOT_PARAMS.get("WELCOME_MESSAGE", "Hola, ¿en qué puedo ayudarte?")
     }
+    
+@app.middleware("http")
+async def cargar_usuario_desde_cookie(request: Request, call_next):
+    user_id = request.cookies.get("usuario_id")
+
+    if user_id:
+        conn = sqlite3.connect("data/soporte_db.db")
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM usuarios WHERE id = ?", (user_id,))
+        request.state.usuario = cur.fetchone()
+        conn.close()
+    else:
+        request.state.usuario = None
+
+    response = await call_next(request)
+    return response    
+
+@router.get("/logout")
+def cerrar_sesion():
+    response = RedirectResponse(url="/login", status_code=302)
+    response.delete_cookie("usuario_id")
+    return response
+
+
+@app.get("/admin", response_class=HTMLResponse)
+def lanzador_admin(request: Request):
+    return templates.TemplateResponse("lanzador.html", {"request": request})

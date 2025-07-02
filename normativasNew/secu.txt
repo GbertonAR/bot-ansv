@@ -1,0 +1,17 @@
+ El volumen de la unidad C no tiene etiqueta.
+ El n£mero de serie del volumen es: 68CA-4415
+
+ Directorio de C:\GBerton2025\Desarrollos\bot-ansv\normativasNew
+
+28/06/2025  19:54             1.428 actualizar_fuentes.py
+28/06/2025  19:35             1.525 cargar_categorias.py
+28/06/2025  17:09             2.177 cargar_txt_normativa.py
+28/06/2025  11:46             1.007 diagnostico_normativas.py
+28/06/2025  22:55             1.889 exportar_normativas_json.py
+28/06/2025  19:43             1.197 migrar_normativas.py
+28/06/2025  19:58             2.639 scrapear_boletin.py
+29/06/2025  06:27             1.450 subir_a_azure_search.py
+28/06/2025  19:50             1.569 sugerir_categoria.py
+28/06/2025  20:58               566 test-cognitive.py
+              10 archivos         15.447 bytes
+               0 dirs     106.000.384 bytes libres

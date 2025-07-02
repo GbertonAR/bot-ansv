@@ -1,0 +1,46 @@
+<!-- data/templates/lanzador.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Panel Administrativo ANSV</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/admin.css" />
+</head>
+<body>
+  <header class="header-admin">
+    <h1>🧭 Centro de Aplicaciones - ANSV</h1>
+    <p id="conexion-status" style="color: green; font-weight: bold; display: none;">✅ Conectado</p>
+  </header>
+
+  <main class="grid-lanzador">
+    <a href="/provincias" class="card">
+      <h2>🌎 Provincias</h2>
+      <p>Gestión de provincias y sus datos</p>
+    </a>
+    <a href="/municipios" class="card">
+      <h2🏘️ Municipios</h2>
+      <p>Asociación con provincias y contacto</p>
+    </a>
+    <a href="/roles" class="card">
+      <h2>🔐 Roles</h2>
+      <p>Gestión de niveles de acceso</p>
+    </a>
+    <a href="/usuarios" class="card">
+      <h2>👤 Usuarios</h2>
+      <p>Alta, edición y permisos</p>
+    </a>
+    <a href="/parametros" class="card">
+      <h2>⚙️ Parámetros</h2>
+      <p>Seteos del sistema</p>
+    </a>
+    <!-- DASHBOARD futuro -->
+    <a href="/dashboard" class="card deshabilitado">
+      <h2>📊 Reportes</h2>
+      <p>En desarrollo</p>
+    </a>
+  </main>
+
+  <script src="/static/js/lanzador.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% if modo == 'editar' %}Editar{% else %}Nueva{% endif %} Provincia</title>
+    <link rel="stylesheet" href="/static/css/parametros.css">
+</head>
+<body>
+    <h1>{% if modo == 'editar' %}Editar{% else %}Nueva{% endif %} Provincia</h1>
+
+    <form method="post" action="{% if modo == 'editar' %}/provincias/{{ provincia[0] }}/editar{% else %}/provincias/nueva{% endif %}">
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" id="nombre" name="nombre" required value="{{ provincia[1] if modo == 'editar' else '' }}"><br><br>
+
+        <button type="submit">💾 Guardar</button>
+        <a href="/provincias">🔙 Volver al listado</a>
+    </form>
+</body>
+</html>

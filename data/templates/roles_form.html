@@ -1,0 +1,21 @@
+<!-- data/templates/roles_form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ 'Editar' if modo == 'editar' else 'Nuevo' }} Rol</title>
+    <link rel="stylesheet" href="/static/css/parametros.css">
+</head>
+<body>
+    <h1>{{ 'Editar' if modo == 'editar' else 'Nuevo' }} Rol</h1>
+    <form method="post" action="{{ '/roles/' + str(rol[0]) + '/editar' if modo == 'editar' else '/roles/nuevo' }}">
+        <label>Nombre:</label><br>
+        <input type="text" name="nombre" value="{{ rol[1] if modo == 'editar' else '' }}" required><br><br>
+        
+        <label>Descripción:</label><br>
+        <textarea name="descripcion">{{ rol[2] if modo == 'editar' else '' }}</textarea><br><br>
+        
+        <button type="submit">Guardar</button>
+        <a href="/roles">Cancelar</a>
+    </form>
+</body>
+</html>

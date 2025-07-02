@@ -1,0 +1,53 @@
+<!-- data/templates/usuarios_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Usuarios</title>
+    <meta charset="utf-8">
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .acciones { display: flex; gap: 0.5em; }
+    </style>
+</head>
+<body>
+    <h1>Usuarios</h1>
+    <a href="/usuarios/nuevo">➕ Nuevo usuario</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Celular</th>
+                <th>Municipio</th>
+                <th>Rol</th>
+                <th>Token</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in usuarios %}
+                <tr>     
+                    <td>{{ u[0] }}</td>
+                    <td>{{ u[1] }}</td>
+                    <td>{{ u[2] }}</td>
+                    <td>{{ u[3] }}</td>
+                    <td>{{ u[4] or 'Sin asignar' }}</td>
+                    
+                    <td>{{ u[5] or 'Sin rol' }}</td>  <!-- nombre del rol -->
+
+                    <td>{{ u[6][:20] if u[6] else '' }}</td>
+                    <td class="acciones">
+                        <a href="/usuarios/{{ u[0] }}/editar">✏️</a>
+                        <form method="post" action="/usuarios/{{ u[0] }}/eliminar" onsubmit="return confirm('¿Eliminar usuario?')">
+                            <button type="submit">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</body>
+</html>

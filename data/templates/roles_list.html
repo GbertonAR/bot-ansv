@@ -1,0 +1,35 @@
+<!-- data/templates/roles_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listado de Roles</title>
+    <link rel="stylesheet" href="/static/css/parametros.css">
+</head>
+<body>
+    <h1>Roles</h1>
+    <a href="/roles/nuevo">➕ Nuevo Rol</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in roles %}
+            <tr>
+                <td>{{ r[1] }}</td>
+                <td>{{ r[2] }}</td>
+                <td>
+                    <a href="/roles/{{ r[0] }}/editar">✏️</a>
+                    <form method="post" action="/roles/{{ r[0] }}/eliminar" style="display:inline;" onsubmit="return confirm('¿Eliminar rol?');">
+                        <button type="submit">🗑️</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

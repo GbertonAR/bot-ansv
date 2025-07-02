@@ -1,0 +1,68 @@
+Decreto 196/25 y su impacto en la ﬁscalización vehicularDNCI
+Dirección Nacional de 
+Coordinación Interjurisdiccional
+1
+2Exhibición de documentosModiﬁcaciones
+Validez legal de los formatos de la 
+Licencia Nacional de Conducir.
+En un control vehicular, el 
+agente ﬁscalizador solicita 
+la documentación para 
+circular (en formato físico 
+o digital): licencia, cédula, 
+seguro y RTO.El usuario debe presentar 
+la Licencia Nacional de 
+Conducir, en formato 
+DIGITAL o FÍSICO, corres-
+pondiente al vehículo que 
+esté conduciendo.Exhibición de documentos ante 
+un agente de ﬁscalización.
+Interjurisdiccionalidad de la Licencia Nacional 
+de Conducir de categoría profesional.
+Período de transición.DNCI - Dirección Nacional de Coordinación Interjurisdiccional3Fiscalización de la Licencia Nacional de Conducir
+4Escenarios de ﬁscalización:El agente controla la licencia; ante 
+una infracción, se retiene el plásti-
+co y se carga la RETENCIÓN en el 
+Sistema Nacional de Anteceden-
+tes de Tránsito (SINAT).
+Sin infracción y licencia habilitada: continúa la 
+marcha.
+Sin infracción, pero con licencia inhabilitada 
+(chequeo vía ValidAR): se retiene preventiva-
+mente el vehículo conforme a la Ley de Tránsito.
+Con infracción: se informa y/o carga la retención 
+en el SINAT, lo que genera un aviso de licencia 
+inhabilitada en el sistema (en etapa de desarrollo 
+informático).LNC FÍSICA
+DNCI - Dirección Nacional de Coordinación Interjurisdiccional
+El agente controla la licenciaque se visuali-
+za en miArgentina, mediante la app Vali-
+dAR (a través del un código QR), a los ﬁnes 
+de veriﬁcar que el rodado se encuentre en 
+condiciones de circular. Si el dispositivo 
+móvil no cuenta con conectividad, se va a 
+solicitar un QR temporal (válido por 24 
+horas), que puede ser obtenido a través de 
+una captura de pantalla.LNC DIGITALUsuario 
+online
+5Usuario online
+Usuario ofﬂine 6
+DNCI - Dirección Nacional de Coordinación InterjurisdiccionalUsuario 
+online7Para viajar
+Control digital 8DNCI - Dirección Nacional de Coordinación Interjurisdiccional9Importante
+PDA
+APP VALIDAR
+CARGAS PELIGROSASEl ﬁscalizador controla la licencia física por 
+medio de la lectura del código de barras, 
+con el ﬁn de revalidar la identidad, che-
+quea los datos del conductor y si la LNC 
+se encuentra habilitada.
+El ﬁscalizador debe tener previamente descar-
+gada la app ValidAR en el celular laboral, con el 
+objetivo de controlar las licencias digitales, revali-
+dar la identidad y los datos del conductor, y las 
+HABILITACIONES de las licencias.
+El certiﬁcado actual mantiene su validez.DNCI - Dirección Nacional de Coordinación Interjurisdiccional
+XXXXXXXX
+XXXXX XXXXXX
+XXXXXXXX

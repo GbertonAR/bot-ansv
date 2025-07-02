@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ 'Editar' if modo == 'editar' else 'Nuevo' }} Parámetro</title>
+  <link rel="stylesheet" href="/static/css/parametros.css">
+</head>
+<body>
+  <h1>{{ '✏️ Editar' if modo == 'editar' else '➕ Nuevo' }} Parámetro</h1>
+
+  
+  <form method="post" action="{{ '/parametros/' ~ parametro[0] ~ '/editar' if modo == 'editar' else '/parametros/nuevo' }}">
+
+    <label>Nombre del Parámetro:</label>
+    <input type="text" name="nombre_parametro" value="{{ parametro[1] if modo == 'editar' else '' }}" required>
+
+    <label>Valor Parametro:</label>
+    <input type="text" name="valor_parametro" value="{{ parametro[2] if modo == 'editar' else '' }}" required>
+
+    <label>Valor:</label>
+    <input type="text" name="valor" value="{{ parametro[3] if modo == 'editar' else '' }}">
+
+    <label>Tipo de Dato:</label>
+    <input type="text" name="tipo_dato" value="{{ parametro[4] if modo == 'editar' else '' }}">
+
+    <label>Descripción:</label>
+    <textarea name="descripcion">{{ parametro[5] if modo == 'editar' else '' }}</textarea>
+
+    <button type="submit" class="btn btn-guardar">💾 Guardar</button>
+    <a href="/parametros" class="btn btn-cancelar">↩️ Cancelar</a>
+  </form>
+</body>
+</html>

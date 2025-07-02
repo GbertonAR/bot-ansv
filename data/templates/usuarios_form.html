@@ -1,0 +1,49 @@
+<!-- data/templates/usuarios_form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ 'Editar' if modo == 'editar' else 'Nuevo' }} Usuario</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h1>{{ 'Editar' if modo == 'editar' else 'Nuevo' }} Usuario</h1>
+    <form method="post" action="{{ '/usuarios/' + usuario[0] + '/editar' if modo == 'editar' else '/usuarios/nuevo' }}">
+        {% if modo == 'crear' %}
+        <label>ID:</label>
+        <input type="text" name="id" required><br>
+        {% else %}
+        <p><strong>ID:</strong> {{ usuario[0] }}</p>
+        {% endif %}
+
+        <label>Nombre:</label>
+        <input type="text" name="nombre" value="{{ usuario[1] if modo == 'editar' else '' }}"><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="{{ usuario[2] if modo == 'editar' else '' }}" required><br>
+
+        <label>Celular:</label>
+        <input type="text" name="celular" value="{{ usuario[3] if modo == 'editar' else '' }}" required><br>
+
+        <label>Municipio:</label>
+        <select name="id_municipio">
+            <option value="">-- Seleccione --</option>
+            {% for m in municipios %}
+            <option value="{{ m[0] }}" {% if modo == 'editar' and m[0] == usuario[4] %}selected{% endif %}>{{ m[1] }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label>Rol:</label>
+        <select name="id_rol" required>
+            {% for r in roles %}
+            <option value="{{ r[0] }}" {% if modo == 'editar' and r[0] == usuario[5] %}selected{% endif %}>{{ r[1] }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label>Token validación:</label>
+        <input type="text" name="token_validacion" value="{{ usuario[6] if modo == 'editar' else '' }}"><br>
+
+        <button type="submit">💾 Guardar</button>
+        <a href="/usuarios">Volver</a>
+    </form>
+</body>
+</html>

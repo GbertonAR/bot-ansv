@@ -1,0 +1,43 @@
+/* static/css/admin.css */
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f7f9fc;
+  margin: 0;
+}
+
+.header-admin {
+  background-color: #004aad;
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
+}
+
+.grid-lanzador {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.2s ease;
+}
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+.deshabilitado {
+  pointer-events: none;
+  opacity: 0.5;
+}

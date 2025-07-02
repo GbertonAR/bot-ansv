@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% if modo == 'editar' %}Editar{% else %}Nuevo{% endif %} Municipio</title>
+    <link rel="stylesheet" href="/static/css/parametros.css">
+</head>
+<body>
+    <h1>{% if modo == 'editar' %}Editar{% else %}Nuevo{% endif %} Municipio</h1>
+
+    <form method="post" action="{% if modo == 'editar' %}/municipios/{{ municipio[0] }}/editar{% else %}/municipios/nuevo{% endif %}">
+        <input type="hidden" name="id_provincia" value="{{ id_provincia if modo == 'crear' else municipio[2] }}">
+
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" id="nombre" name="nombre" required value="{{ municipio[1] if modo == 'editar' else '' }}"><br><br>
+
+        <label for="mail">Mail Institucional:</label><br>
+        <input type="email" id="mail" name="mail" value="{{ municipio[3] if modo == 'editar' else '' }}"><br><br>
+
+        <button type="submit">💾 Guardar</button>
+        <a href="/municipios/listar?id_provincia={{ municipio[2] if modo == 'editar' else id_provincia }}">🔙 Volver al listado</a>
+    </form>
+</body>
+</html>

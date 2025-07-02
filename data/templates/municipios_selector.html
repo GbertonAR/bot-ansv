@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Seleccionar Provincia</title>
+    <link rel="stylesheet" href="/static/css/estilos.css">
+</head>
+<body>
+    <h1>Municipios por Provincia</h1>
+
+    <form method="get" action="/municipios/listar">
+        <label for="provincia">Seleccioná una provincia:</label><br>
+        <select id="provincia" name="id_provincia" required>
+            {% for prov in provincias %}
+            <option value="{{ prov[0] }}">{{ prov[1] }}</option>
+            {% endfor %}
+        </select><br><br>
+        <button type="submit">🔍 Ver Municipios</button>
+    </form>
+</body>
+</html>

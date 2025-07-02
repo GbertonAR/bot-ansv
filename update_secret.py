@@ -27,3 +27,12 @@ else:
         logger.error(f"❌ Error al actualizar DIRECT_LINE_SECRET en la DB: {e}")
         import traceback
         traceback.print_exc()
+        
+        
+        
+#### Azure cognitive services
+#AZURE_COGNITIVE_SERVICES_KEY = "j4aDzLBGWBo4VplEQMudE7HhhHbg7cRMmTRifk3ENpAzSeCrg5ph"
+# 7wVtjdzvcaqdH6cDiGNzYMvEM03OpBDcShDmqC3mQfAzSeBTDu1C 
+#AZURE_COGNITIVE_SERVICES_ENDPOINT = "https://ansv-vision.cognitiveservices.azure.com/"
+https://ansv-search.search.windows.net
+

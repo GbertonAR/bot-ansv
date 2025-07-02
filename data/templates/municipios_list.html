@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Municipios de {{ nombre_provincia }}</title>
+    <link rel="stylesheet" href="/static/css/parametros.css">
+</head>
+<body>
+    <h1>Municipios de {{ nombre_provincia }}</h1>
+
+    <a href="/municipios/nuevo?id_provincia={{ id_provincia }}">➕ Nuevo Municipio</a><br><br>
+
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Mail Institucional</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in municipios %}
+            <tr>
+                <td>{{ m[0] }}</td>
+                <td>{{ m[1] }}</td>
+                <td>{{ m[3] or '' }}</td>
+                <td>
+                    <a href="/municipios/{{ m[0] }}/editar">✏️ Editar</a>
+                    <form method="post" action="/municipios/{{ m[0] }}/eliminar" style="display:inline;" onsubmit="return confirm('¿Eliminar este municipio?');">
+                        <button type="submit">🗑️ Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <a href="/municipios">🔙 Cambiar provincia</a>
+</body>
+</html>

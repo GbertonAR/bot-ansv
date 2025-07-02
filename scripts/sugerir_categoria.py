@@ -1,0 +1,2 @@
+ # Asigna categoría automáticamente
+ 

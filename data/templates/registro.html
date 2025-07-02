@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Usuario - ANSV</title>
+  <link rel="stylesheet" href="../../static/css/registro.css">
+</head>
+<body>
+  <div class="registro-container">
+    <h1>📝 Registro de Usuario</h1>
+    <form id="registro-form">
+      <label for="nombre">Nombre completo:</label>
+      <input type="text" id="nombre" name="nombre" required>
+
+      <label for="email">Correo electrónico:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="celular">Número de celular:</label>
+      <input type="tel" id="celular" name="celular" required>
+
+      <label for="provincia">Provincia:</label>
+      <select id="provincia" name="provincia" required></select>
+
+      <label for="municipio">Municipio:</label>
+      <select id="municipio" name="id_municipio" required></select>
+
+      <button type="submit">Registrarme</button>
+    </form>
+    <p id="respuesta"></p>
+    <div id="modal-exito" class="modal" style="display:none;">
+      <div class="modal-contenido">
+        <p id="modal-mensaje"></p>
+        <button onclick="cerrarModal()">OK</button>
+      </div>
+    </div>    
+  </div>
+
+  <script>
+    // Cargar provincias y municipios dinámicamente desde backend
+    async function cargarProvincias() {
+        console.log('Cargando provincias...');
+        const res = await fetch('/api/provincias');
+        const provincias = await res.json(); // ✅ solo una vez
+        console.log('Provincias cargadas:', provincias);
+
+        const select = document.getElementById('provincia');
+        provincias.forEach(p => {
+          const option = document.createElement('option');
+          option.value = p.ID;
+          option.textContent = p.Nombre;
+          select.appendChild(option);
+      });
+    }
+
+    async function cargarMunicipios(idProvincia) {
+      const res = await fetch(`/api/municipios/${idProvincia}`);
+      const municipios = await res.json();
+      const select = document.getElementById('municipio');
+      select.innerHTML = '';
+      municipios.forEach(m => {
+        const option = document.createElement('option');
+        option.value = m.ID;
+        option.textContent = m.Nombre;
+        select.appendChild(option);
+      });
+    }
+
+    document.getElementById('provincia').addEventListener('change', (e) => {
+      cargarMunicipios(e.target.value);
+    });
+
+    document.getElementById('registro-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const datos = {
+        nombre: document.getElementById('nombre').value,
+        email: document.getElementById('email').value,
+        celular: document.getElementById('celular').value,
+        id_municipio: document.getElementById('municipio').value
+      };
+
+      const res = await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos)
+      });
+
+      const resultado = await res.json();
+        mostrarModal(resultado.mensaje || resultado.detail);
+    });
+
+    cargarProvincias();
+
+    function mostrarModal(mensaje) {
+      document.getElementById('modal-mensaje').textContent = mensaje;
+      document.getElementById('modal-exito').style.display = 'flex';
+    }
+
+    function cerrarModal() {
+      document.getElementById('modal-exito').style.display = 'none';
+      document.getElementById('registro-form').reset(); // ✅ Limpia el formulario
+      document.getElementById('municipio').innerHTML = ''; // Limpia municipios
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Parámetros del Sistema</title>
+  <link rel="stylesheet" href="/static/css/parametros.css">
+</head>
+<body>
+  <h1>🔧 Parámetros del Sistema</h1>
+
+  <a href="/parametros/nuevo" class="btn btn-nuevo">➕ Nuevo Parámetro</a>
+
+  <table>
+    <thead>
+      <tr>
+        
+        <th>Nombre</th>
+        <th>Valor Parametro</th>
+        <th>Valor</th>
+        <th>Tipo</th>
+        <th>Descripción</th>
+
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in parametros %}
+      <tr>
+
+        <td>{{ p[1] }}</td>
+        <td>{{ p[2][:25] }}{% if p[2]|length > 20 %}...{% endif %}</td>
+        <td>{{ p[3] }}</td>
+        <td>{{ p[4] }}</td>
+        <td>{{ p[5] }}</td>
+
+        <td>
+          <a href="/parametros/{{ p[0] }}/editar" class="btn btn-editar">✏️ Editar</a>
+          <form method="post" action="/parametros/{{ p[0] }}/eliminar" style="display:inline;">
+            <button type="submit" class="btn btn-eliminar" onclick="return confirm('¿Eliminar este parámetro?')">🗑️</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

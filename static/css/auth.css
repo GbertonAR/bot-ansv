@@ -1,0 +1,50 @@
+/* bot-ansv/static/css/auth.css */
+.auth-container {
+  max-width: 400px;
+  margin: 80px auto;
+  background: #ffffffcc;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+}
+.auth-container h2 {
+  margin-bottom: 1.5rem;
+  color: #005bac;
+}
+.auth-container input {
+  width: 100%;
+  padding: 10px;
+  margin: 1rem 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.auth-container button {
+  background-color: #005bac;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.auth-container button:hover {
+  background-color: #004899;
+}
+.mensaje {
+  color: green;
+  margin-top: 1rem;
+  min-height: 1rem;
+}
+.enlace-registro {
+  margin-top: 2rem;
+  font-size: 14px;
+}
+.enlace-registro a {
+  color: #005bac;
+  text-decoration: none;
+  font-weight: bold;
+}
