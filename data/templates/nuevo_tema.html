@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Tema Permitido</title>
+    <link rel="stylesheet" href="/static/css/parametros.css" />
+</head>
+<body>
+    <header class="header-admin">
+        <h1>➕ Nuevo Tema Permitido</h1>
+    </header>
+
+    <main class="formulario-admin">
+        <form method="post" action="/temas/nuevo">
+            <label for="tema">Tema:</label>
+            <input type="text" id="tema" name="tema" required placeholder="Ej: seguridad vial, tránsito, etc.">
+            
+            <div class="acciones-form">
+                <button type="submit" class="btn btn-guardar">💾 Guardar</button>
+                <a href="/temas" class="btn btn-cancelar">↩️ Cancelar</a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

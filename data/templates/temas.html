@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Temas Permitidos</title>
+    <link rel="stylesheet" href="/static/css/parametros.css" /> 
+</head>
+<body>
+    <header class="header-admin">    
+        <h1>🧠 Temas Permitidos</h1>
+    </header>
+
+    <p>Los temas definidos aquí se utilizan para validar las búsquedas en el bot ANSV. Pueden agregarse, editarse o eliminarse según necesidad.</p>
+    
+    <a class="btn btn-nuevo" href="/temas/nuevo">➕ Nuevo Tema</a>
+
+    <main class="grid-lanzador">    
+        <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tema</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tema in temas %}
+                    <tr>
+                        <td>{{ tema[0] }}</td>
+                        <td>{{ tema[1] }}</td>
+                        <td>
+                            <a href="/temas/{{ tema[0] }}/editar" class="btn btn-editar">✏️ Editar</a>
+                            <form method="post" action="/temas/{{ tema[0] }}/eliminar" style="display:inline;">
+                                <button type="submit" class="btn btn-eliminar" onclick="return confirm('¿Eliminar este tema?')">🗑️</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

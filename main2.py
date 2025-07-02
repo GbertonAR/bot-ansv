@@ -14,7 +14,7 @@ from pydantic import BaseModel
 from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 #from openai import AzureOpenAI
-from data import auth, admin
+from data import auth, admin, temas
 from data.crud_parametros import router as router_parametros
 from data.crud_provincias import router as router_provincias
 from data.crud_municipios import router as router_municipios
@@ -123,14 +123,14 @@ app.add_middleware(
     allow_credentials=True,
 )
 
-TEMAS_PERMITIDOS = [
-    "ansv", "agencia nacional de seguridad vial", "ley", "decreto", "resolución", "linti", "procedimientos", "normativa nacional",
-    "seguridad vial", "normativa", "provincias", "provincia", "municipios", "municipio","autoridades", "categorias", "categoría", "licencia de conducir",
-    "sitio web", "contacto", "ministerio", "tránsito", "licencia", "vialidad", "procedimientos", "regulaciones"
-    "reglamento", "cnrt", "licencias", "educación vial", "registro", "transporte", "accidentes", "controles", "sanciones", "infraestructura",
-    "seguridad", "prevención", "conducción", "vehículos", "peatones", "ciclistas", "motociclistas", "transporte público", "controles de tránsito",
-    "ley de tránsito", "reglamento de tránsito", "seguridad en rutas", "seguridad en caminos", "seguridad en autopistas", "seguridad en calles", "seguridad en avenidas", "seguridad en carreteras"
-]
+# TEMAS_PERMITIDOS = [
+#     "ansv", "agencia nacional de seguridad vial", "ley", "decreto", "resolución", "linti", "procedimientos", "normativa nacional",
+#     "seguridad vial", "normativa", "provincias", "provincia", "municipios", "municipio","autoridades", "categorias", "categoría", "licencia de conducir",
+#     "sitio web", "contacto", "ministerio", "tránsito", "licencia", "vialidad", "procedimientos", "regulaciones"
+#     "reglamento", "cnrt", "licencias", "educación vial", "registro", "transporte", "accidentes", "controles", "sanciones", "infraestructura",
+#     "seguridad", "prevención", "conducción", "vehículos", "peatones", "ciclistas", "motociclistas", "transporte público", "controles de tránsito",
+#     "ley de tránsito", "reglamento de tránsito", "seguridad en rutas", "seguridad en caminos", "seguridad en autopistas", "seguridad en calles", "seguridad en avenidas", "seguridad en carreteras"
+# ]
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(auth.router)
@@ -141,6 +141,7 @@ app.include_router(router_provincias)
 app.include_router(router_municipios)
 app.include_router(router_roles)
 app.include_router(router_usuarios)
+app.include_router(temas.router)
 
 
 
@@ -191,10 +192,19 @@ deployment_name = BOT_PARAMS["AZURE_OPENAI_DEPLOYMENT_NAME"]
 #     api_version="2024-02-15-preview"  # Cambiar si actualizas versión en Azure
 # )
 
-def es_consulta_valida(mensaje: str) -> bool:
+# def es_consulta_valida(mensaje: str) -> bool:
+#     mensaje_limpio = mensaje.lower()
+#     print(f"🔍 Verificando consulta: {mensaje_limpio}")
+#     return any(palabra in mensaje_limpio for palabra in TEMAS_PERMITIDOS)
+
+def es_consulta_valida(mensaje: str, db_path: str = "data/soporte_db.db") -> bool:
     mensaje_limpio = mensaje.lower()
     print(f"🔍 Verificando consulta: {mensaje_limpio}")
-    return any(palabra in mensaje_limpio for palabra in TEMAS_PERMITIDOS)
+    with sqlite3.connect(db_path) as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT tema FROM temas_permitidos;")
+        temas = [fila[0] for fila in cursor.fetchall()]
+    return any(palabra in mensaje_limpio for palabra in temas)
 
 def validar_urls(texto: str) -> str:
     urls = re.findall(r'https?://\S+', texto)

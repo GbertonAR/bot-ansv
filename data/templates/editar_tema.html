@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Tema Permitido</title>
+    <link rel="stylesheet" href="/static/css/parametros.css" />
+</head>
+<body>
+    <header class="header-admin">
+        <h1>✏️ Editar Tema Permitido</h1>
+    </header>
+
+    <main class="formulario-admin">
+        <form method="post" action="/temas/{{ tema[0] }}/editar">
+            <label for="tema">Tema:</label>
+            <input type="text" id="tema" name="tema" value="{{ tema[1] }}" required>
+
+            <div class="acciones-form">
+                <button type="submit" class="btn btn-guardar">💾 Guardar Cambios</button>
+                <a href="/temas" class="btn btn-cancelar">↩️ Cancelar</a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
